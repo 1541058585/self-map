@@ -74,7 +74,7 @@ export default class HeatmapOverlay {
     this.moveendListener = (e) => {
       this._reset();
     }
-    this._map.on('pointermove', this.moveendListener);
+    this._map.on(this.listener, this.moveendListener);
     this._map.getView().on('change:resolution', this.moveendListener);
     this._div = this.el;
   }
@@ -224,7 +224,7 @@ export default class HeatmapOverlay {
    * */
   onRemove() {
     document.querySelector('.ol-viewport').removeChild(this._div);
-    this._map.un('moveend', this.moveendListener);
+    this._map.un(this.listener, this.moveendListener);
     this._map.getView().un('change:resolution', this.moveendListener);
     this.heatmap = null;
     this.moveendListener = null;

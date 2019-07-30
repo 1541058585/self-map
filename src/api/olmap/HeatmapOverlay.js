@@ -54,8 +54,6 @@ export default class HeatmapOverlay {
     this.el.style.top = 0;
     this.el.style.left = 0;
     this.el.style.border = 0;
-    // this.el.style.backgroundColor = 'red';
-    // this.el.style.opacity = '0.3';
     this.el.style.width = `${this._map.getSize()[0]}px`;
     this.el.style.height = `${this._map.getSize()[1]}px`;
 
@@ -109,12 +107,6 @@ export default class HeatmapOverlay {
     if (!this.isSupportCanvas()) { // 判断是否支持Canvas.
       return false;
     }
-    // let currentBounds = (this._map.getView().calculateExtent());
-    // console.log(currentBounds);
-    // let mapExtent = this._map.getView().calculateExtent(this._map.getSize());
-    // console.log(mapExtent);
-    // let point = transform([getCenter(mapExtent)[0], getCenter(mapExtent)[1]], 'EPSG:3857', 'EPSG:4326');
-    // console.log(point);
 
     let d = data.data;
     let dlen = d.length; // 数据和数据长度
@@ -166,18 +158,12 @@ export default class HeatmapOverlay {
       let len = this.latlngs.length;
 
       this.WFSVectorSource.forEachFeatureIntersectingExtent((this._map.getView().calculateExtent()), (feature) => {
-        // console.log(feature);
         let coordinates = feature.getGeometry().getCoordinates();
-        // console.log(coordinates);
         let pixel = this._map.getPixelFromCoordinate(coordinates);
-        // console.log(pixel);
         let value = feature.get('value');
         localMax = Math.max(value, localMax); // 取最大，
         localMin = Math.min(value, localMin); // 取最小
-        // console.log(localMax);
-        // console.log(localMin);
         let latlngPoint = { x: Math.round(pixel[0]), y: Math.round(pixel[1]) };
-        // console.log(this.conf.valueField);
         latlngPoint[this.conf.valueField] = value;
 
         let radius = feature.get('radius');
@@ -186,7 +172,6 @@ export default class HeatmapOverlay {
         } else {
           radius = (this.conf.radius || 2) * radiusMultiplier / 2;
         }
-        // console.log(radius);
         latlngPoint.radius = radius;
         latLngPoints.push(latlngPoint);
       });
@@ -212,10 +197,6 @@ export default class HeatmapOverlay {
     if (!this.isSupportCanvas()) { // 判断是否支持Canvas.
       return false;
     }
-    // let currentBounds = (this._map.getView().calculateExtent(this._map.getSize()));
-    // this.bounds = currentBounds;
-    // let ne = this._map.getPixelFromCoordinate(getBottomLeft(currentBounds));
-    // let sw = this._map.getPixelFromCoordinate(getBottomRight(currentBounds));
     this._update();
   }
   /**

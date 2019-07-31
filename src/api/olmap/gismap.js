@@ -64,6 +64,7 @@ export default class GisMap extends OlMap {
       min: 0,
       data: data
     };
+
     this.heatmapOverlay = new HeatmapOverlay({
       config: config,
       map: this.map

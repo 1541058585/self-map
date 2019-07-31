@@ -3,7 +3,6 @@ import Heatmap from 'heatmap.js'
 import { DomUtil } from '@/utils/dom-util.js'
 import Point from 'ol/geom/Point.js';
 import { getBottomLeft, getBottomRight } from 'ol/extent.js';
-import { transform, transformExtent, get as getProjection } from 'ol/proj.js';
 import Feature from 'ol/Feature';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Vector as VectorLayer } from 'ol/layer.js';
@@ -197,6 +196,9 @@ export default class HeatmapOverlay {
     if (!this.isSupportCanvas()) { // 判断是否支持Canvas.
       return false;
     }
+    let currentBounds = (this._map.getView().calculateExtent(this._map.getSize()));
+    let ne = this._map.getPixelFromCoordinate(getBottomLeft(currentBounds));
+    let sw = this._map.getPixelFromCoordinate(getBottomRight(currentBounds));
     this._update();
   }
   /**

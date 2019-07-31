@@ -104,6 +104,10 @@ export default class OlMap {
      */
     this.HeatmapLayer = null;
   };
+  /**
+   * @private
+   * 创建地图
+   */
   _createMap() {
     let dragAndDropInteraction = new DragAndDrop({
       formatConstructors: [
@@ -166,16 +170,28 @@ export default class OlMap {
     this._setZoom(this.zoom, this.center);
     this.map.updateSize();
   }
+  /**
+   * @private
+   * 添加事件
+   **/
   _addInteraction() {
     this.map.addInteraction(this.doubleClickZoom);
     this.map.addInteraction(this.mouseWheelZoom);
     this.mouseOverPopupFlag = true;
   }
+  /**
+   * @private
+   * 移除事件
+   **/
   _removeInteraction() {
     this.map.removeInteraction(this.doubleClickZoom);
     this.map.removeInteraction(this.mouseWheelZoom);
     this.mouseOverPopupFlag = false;
   }
+  /**
+   * @private
+   * 创建地图图标样式，openlayers 不支持gif 需要以其它的方式实现
+   **/
   _createStyle(src, img, name) {
     return new Style({
       image: new Icon({
@@ -198,6 +214,10 @@ export default class OlMap {
       })
     })
   };
+  /**
+   * @private
+   * 添加带图标的marker点
+   **/
   _addIconMarkers(data, icon, _this) {
     let iconFeature = new Feature({
       geometry: new Point([data.longitude, data.latitude]),
@@ -215,6 +235,10 @@ export default class OlMap {
     this.MarkerVectorLayer.getSource().addFeature(iconFeature);
     return iconFeature;
   };
+  /**
+   * @private
+   * 添加带图标，带文字的maerker
+   **/
   _addIconMarkersByName(data, name, icon, _this) {
     let iconFeature = new Feature({
       geometry: new Point([data.longitude, data.latitude]),
@@ -232,6 +256,10 @@ export default class OlMap {
     this.MarkerVectorLayer.getSource().addFeature(iconFeature);
     return iconFeature;
   };
+  /**
+   * @private
+   * 创建地图带样式的动画效果，className:样式名称
+   **/
   _createMarkerAnimation(data, className, html, offset) {
     let olMarker = document.createElement('div');
     olMarker.id = `${data.id}`;
@@ -256,6 +284,10 @@ export default class OlMap {
     }
     return overlay;
   }
+  /**
+   * @private
+   * 创建大图标样式
+   **/
   _createBigStyle(src, img, name) {
     return new Style({
       image: new Icon({
@@ -279,6 +311,10 @@ export default class OlMap {
 
     });
   };
+  /**
+   * @private
+   * 创建大图标marker
+   **/
   _addBigIconMarkers(data, name, icon) {
     let iconFeature = new Feature({
       geometry: new Point([data.longitude, data.latitude]),
@@ -303,6 +339,10 @@ export default class OlMap {
     this.map.addLayer(marker);
     return marker;
   };
+  /**
+   * @private
+   * 添加地图事件
+   **/
   _registerEvent(_this, _event, callback) {
     if (callback) {
       _this.map.on(_event, (e) => {
@@ -336,6 +376,10 @@ export default class OlMap {
     // 为视图设置动画。可以为视图的中心，缩放（或分辨率）和旋转设置动画，以便在视图状态之间平滑过渡。例如，要将视图设置为新的缩放级别：
     view.animate({ zoom: zoom }, { center: center });
   }
+  /**
+   * @private
+   * 开启地图弹窗
+   **/
   _showPopup(coordinates, html, offset) {
     let container = document.getElementById('popup');
     if (container) {
@@ -374,6 +418,10 @@ export default class OlMap {
       }
     }
   };
+  /**
+   * @private
+   * 关闭地图弹窗
+   **/
   _hidePopup() {
     let closer = document.getElementById('popup-closer');
     if (closer) {

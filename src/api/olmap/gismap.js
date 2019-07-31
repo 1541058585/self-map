@@ -64,20 +64,6 @@ export default class GisMap extends OlMap {
       min: 0,
       data: data
     };
-    console.log(data2);
-    // this.heatmapOverlay = new HeatmapOverlayExtend(config);
-    // this.map.addLayer(this.heatmapOverlay);
-    // this.heatmapOverlay.setDataSet(data2);
-
-    let x = this.map.getSize()[0];
-    let y = this.map.getSize()[1];
-    // let vectorSource = new VectorSource();
-    // this.heatmapOverlay = new HeatmapVectorLayer({
-    //   width: x,
-    //   height: y
-    // });
-    // this.map.addLayer(this.heatmapOverlay);
-    // this.heatmapOverlay.setDataSet(data2);
     this.heatmapOverlay = new HeatmapOverlay({
       config: config,
       map: this.map

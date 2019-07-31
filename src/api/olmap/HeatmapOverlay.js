@@ -5,8 +5,9 @@ import Point from 'ol/geom/Point.js';
 import { getBottomLeft, getBottomRight } from 'ol/extent.js';
 import Feature from 'ol/Feature';
 import { Vector as VectorSource } from 'ol/source.js';
-import { Vector as VectorLayer } from 'ol/layer.js';
 import { Circle as CircleStyle, Fill, Style } from 'ol/style.js';
+import VectorLayer from 'ol/layer/Vector';
+import { assign } from 'ol/obj.js';
 
 /**
  * AUTHOR：CYQ
@@ -36,9 +37,11 @@ import { Circle as CircleStyle, Fill, Style } from 'ol/style.js';
  this.heatmapOverlay.toggle(false);
  this.heatmapOverlay.onRemove();//完全释放对象，并释放内存
  * **/
-export default class HeatmapOverlay {
+export default class HeatmapOverlay extends VectorLayer {
   constructor(opt0ptions) {
     const options = opt0ptions !== {} ? opt0ptions : {};
+    const baseOptions = assign({}, options);
+    super(baseOptions);
     this.conf = options.config;
     this._map = options.map;
     this.listener = 'pointermove'; // 'moveend' ||'pointermove' 一个消耗性能低一个消耗性能严重。

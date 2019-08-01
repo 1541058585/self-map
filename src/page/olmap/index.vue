@@ -27,7 +27,10 @@
           })
         },
         beforeDestroy() {
-          delete this.olmap;
+         if (this.olmap) {
+           this.olmap.beforeDestroy();
+           delete this.olmap;
+         }
         }
     }
 </script>

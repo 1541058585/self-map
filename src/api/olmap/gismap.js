@@ -93,7 +93,7 @@ export default class GisMap extends OlMap {
     this.animationOverlay.push(markera3);
 
     let rdm = Math.floor(Math.random() * 7);
-    // console.log(rdm);
+    console.log(rdm);
     let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
     this.animationOverlay.push(markerByGif);
 

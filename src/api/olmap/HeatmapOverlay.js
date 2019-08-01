@@ -208,7 +208,7 @@ export default class HeatmapOverlay extends VectorLayer {
    * @移除叠加物，释放覆盖物对象所占用的内存。
    * @private
    * */
-  onRemove() {
+  toggleRemove() {
     document.querySelector('.ol-viewport').removeChild(this._div);
     this._map.un(this.listener, this.moveendListener);
     this._map.getView().un('change:resolution', this.moveendListener);

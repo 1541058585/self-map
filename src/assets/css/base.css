@@ -1,0 +1,82 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, cite, img, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  border: 0;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  vertical-align: baseline;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  min-width: 1366px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -ms-overflow-x: hidden;
+  -ms-overflow-y: hidden;
+}
+body {
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+button {
+  outline: none;
+}
+ol, ul {
+  margin: 0;
+  padding: 0;
+}
+ol, ul, li {
+  list-style: none;
+}
+i, em {
+  font-style: normal;
+}
+blockquote {
+  quotes: none;
+}
+blockquote:before, blockquote:after {
+  content: '';
+  content: none;
+}
+a {
+  outline: none;
+  text-decoration: none;
+}
+.css_red_animation_overlay {
+  border-radius: 1000px;
+  border-width: 0;
+  overflow: hidden;
+  background: red;
+  transform: scale(0);
+  animation: myfirst 2.5s;
+  animation-iteration-count: infinite;
+  z-index: 1;
+}
+.css_yellow_animation_overlay {
+  border-radius: 1000px;
+  border-width: 0;
+  overflow: hidden;
+  background: #ffae00;
+  transform: scale(0);
+  animation: myfirst 2.5s;
+  animation-iteration-count: infinite;
+  z-index: 1;
+}
+.css_green_animation_overlay {
+  border-radius: 1000px;
+  border-width: 0;
+  overflow: hidden;
+  background: #1BE81B;
+  transform: scale(0);
+  animation: myfirst 2.5s;
+  animation-iteration-count: infinite;
+  z-index: 1;
+}
+@keyframes myfirst {
+  to {
+    transform: scale(2);
+    background: rgba(0, 0, 0, 0);
+  }
+}

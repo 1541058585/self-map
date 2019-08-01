@@ -12,6 +12,8 @@ export default class GisMap extends OlMap {
     this.minZoom = 6;
     this.zoom = 6
     this.heatmapOverlay = null;
+    this.markers = [];
+    this.animationOverlay = [];
   }
   initMap() {
     this._createMap();
@@ -71,6 +73,45 @@ export default class GisMap extends OlMap {
     });
     this.heatmapOverlay.setDataSet(data2);
     // this.heatmapOverlay.toggle(true); // true 关闭
-    this.heatmapOverlay.toggle(false)
+    this.heatmapOverlay.toggle(true);
+    let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `80.976563`, latitude: `32.995605`, value: 250};
+    let marker = this._addIconMarkersByName(single, '', `/static/images/png/1.png`, this);
+    this.markers.push(marker);
+    let markera = this._createMarkerAnimation(single, 'css_red_animation_overlay', '<p></p>', [-5, -6]);
+    this.animationOverlay.push(markera);
+
+    let single2 = {id: `OtherPollutionInfo@85`, name: `狮泉河镇鑫源修理厂`, longitude: `84.384613`, latitude: `33.42997`, value: Math.floor(Math.random() * 120)};
+    let marker2 = this._addIconMarkersByName(single2, '', `/static/images/png/2.png`, this);
+    this.markers.push(marker2);
+    let markera2 = this._createMarkerAnimation(single2, 'css_yellow_animation_overlay', '<p></p>', [-5, -6]);
+    this.animationOverlay.push(markera2);
+
+    let single3 = {id: `Enteripse@121`, name: `阿里北控泷源水务有限公司`, longitude: `82.001953`, latitude: `33.010253`, value: 120};
+    let marker3 = this._addIconMarkersByName(single3, '', `/static/images/png/3.png`, this);
+    this.markers.push(marker3);
+    let markera3 = this._createMarkerAnimation(single3, 'css_green_animation_overlay', '<p></p>', [-5, -6]);
+    this.animationOverlay.push(markera3);
+
+    let rdm = Math.floor(Math.random() * 7);
+    // console.log(rdm);
+    let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
+    this.animationOverlay.push(markerByGif);
+
+    this.beforeDestroy();
+  }
+  beforeDestroy() {
+    this.heatmapOverlay = null;
+    this.animationOverlay.forEach((item) => {
+      this.map.removeOverlay(item);
+    });
+    this.animationOverlay = [];
+    this.markers.forEach(item => {
+      this.MarkerVectorLayer.getSource().getFeatures().forEach(item2 => {
+        if (item2 === item) {
+          this.MarkerVectorLayer.getSource().removeFeature(item);
+        }
+      });
+    });
+    this.markers = [];
   }
 }

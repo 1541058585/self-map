@@ -2,7 +2,6 @@
   <div class="ol-map">
     <div id="one-olmap" class="one-olmap">
     </div>
-    <div id="coordinate"></div>
   </div>
 </template>
 
@@ -49,16 +48,6 @@
       overflow: hidden;
       position: relative;
       z-index: 1;
-    }
-    #coordinate {
-      width:130px;
-      height: auto;
-      position:fixed;
-      bottom: 50px;
-      right: 20px;
-      z-index: 9999;
-      color: red;
-      font-weight: bold;
     }
   }
 </style>

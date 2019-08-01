@@ -285,6 +285,33 @@ export default class OlMap {
     return overlay;
   }
   /**
+   * @private 支持gif 图片
+   * 创建地图带样式的动画效果，image: gif
+   **/
+  _createMarkerAnimationByGif(data, icon, offset) {
+    let olMarker = document.createElement('div');
+    olMarker.id = `${data.id}`;
+    olMarker.style.width = '50px';
+    olMarker.style.height = '50px';
+    olMarker.style.backgroundImage = `url(${icon})`;
+    olMarker.style.backgroundSize = '50px 50px';
+    let coordinates = [data.longitude, data.latitude];
+    let overlay = new Overlay({
+      element: olMarker,
+      positioning: 'animation-overlay',
+      stopEvent: false,
+      offset: offset,
+      zIndex: 1
+    });
+    if (coordinates) {
+      overlay.setPosition(coordinates);
+      overlay.data = data;
+      this.map.addOverlay(overlay);
+      this.map.updateSize();
+    }
+    return overlay;
+  }
+  /**
    * @private
    * 创建大图标样式
    **/

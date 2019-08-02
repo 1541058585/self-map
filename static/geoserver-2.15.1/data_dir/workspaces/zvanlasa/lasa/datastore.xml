@@ -1,0 +1,22 @@
+<dataStore>
+  <id>DataStoreInfoImpl-653ccdfd:16ac5601f83:-7fe4</id>
+  <name>lasa</name>
+  <type>Directory of spatial files (shapefiles)</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-653ccdfd:16ac5601f83:-7fff</id>
+  </workspace>
+  <connectionParameters>
+    <entry key="charset">UTF-8</entry>
+    <entry key="filetype">shapefile</entry>
+    <entry key="create spatial index">true</entry>
+    <entry key="memory mapped buffer">false</entry>
+    <entry key="timezone">Asia/Shanghai</entry>
+    <entry key="enable spatial index">true</entry>
+    <entry key="namespace">www.zvanlasa.com</entry>
+    <entry key="cache and reuse memory maps">true</entry>
+    <entry key="url">file:data/lasa</entry>
+    <entry key="fstype">shape</entry>
+  </connectionParameters>
+  <__default>false</__default>
+</dataStore>

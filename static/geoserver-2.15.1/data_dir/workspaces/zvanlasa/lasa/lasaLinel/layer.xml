@@ -1,0 +1,15 @@
+<layer>
+  <name>lasaLinel</name>
+  <id>LayerInfoImpl-d1169d7:16ad420f314:-7ff1</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-d1169d7:16ad420f314:-7fed</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-d1169d7:16ad420f314:-7ff2</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

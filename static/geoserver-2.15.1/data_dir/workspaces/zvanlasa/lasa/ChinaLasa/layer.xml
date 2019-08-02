@@ -1,0 +1,15 @@
+<layer>
+  <name>ChinaLasa</name>
+  <id>LayerInfoImpl-653ccdfd:16ac5601f83:-7fd5</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-653ccdfd:16ac5601f83:-7fdd</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-653ccdfd:16ac5601f83:-7fd6</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

@@ -1,0 +1,33 @@
+<layerGroup>
+  <id>LayerGroupInfoImpl-d1169d7:16ad420f314:-7fee</id>
+  <name>LaSaBackGround</name>
+  <mode>SINGLE</mode>
+  <title>西藏拉萨</title>
+  <abstractTxt>西藏拉萨</abstractTxt>
+  <workspace>
+    <id>WorkspaceInfoImpl-653ccdfd:16ac5601f83:-7fff</id>
+  </workspace>
+  <publishables>
+    <published type="layer">
+      <id>LayerInfoImpl-653ccdfd:16ac5601f83:-7fd5</id>
+    </published>
+    <published type="layer">
+      <id>LayerInfoImpl-d1169d7:16ad420f314:-7ff1</id>
+    </published>
+  </publishables>
+  <styles>
+    <style/>
+    <style/>
+  </styles>
+  <bounds>
+    <minx>78.47109837862172</minx>
+    <maxx>103.5777484530305</maxx>
+    <miny>19.611617830022794</miny>
+    <maxy>40.31000875124596</maxy>
+    <crs>EPSG:4326</crs>
+  </bounds>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layerGroup>

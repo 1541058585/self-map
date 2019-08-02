@@ -8,6 +8,7 @@ import { intersectsCoordinate } from 'ol/geom/Geometry.js'
 import HeatmapOverlay from './HeatmapOverlay.js';
 import MousePosition from 'ol/control/MousePosition';
 import { createStringXY } from 'ol/coordinate';
+import AnimationOverlay from './AnimationOverlay.js';
 
 export default class GisMap extends OlMap {
   constructor(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection) {
@@ -16,7 +17,8 @@ export default class GisMap extends OlMap {
     this.zoom = 6
     this.heatmapOverlay = null;
     this.markers = [];
-    this.animationOverlay = [];
+    this.animationOverlay = []; // 传统方式
+    this.animationOverlayObject = null; // 对象的方式
   }
   initMap() {
     this._createMap();
@@ -28,7 +30,7 @@ export default class GisMap extends OlMap {
     })
     this.map.addControl(coor);
     let config = {
-      radius: 0.8,
+      radius: 0.5,
       maxOpacity: 0.8,
       scaleRadius: true,
       useLocalExtrema: true,
@@ -38,6 +40,294 @@ export default class GisMap extends OlMap {
       valueField: 'value'
     };
     let data = [
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '1', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '2', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '3', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '4', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '5', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '6', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '7', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '8', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '9', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '10', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '11', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '12', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '13', name: '名称1', longitude: 103.088888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '14', name: '名称2', longitude: 103.188888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '15', name: '名称3', longitude: 103.288888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '16', name: '名称4', longitude: 103.388888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '17', name: '名称5', longitude: 103.488888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
+      // { id: '18', name: '名称6', longitude: 103.588888 + Math.random(), latitude: 30.672222 + Math.random(), value: Math.floor(Math.random() * 500) },
       {id: `Enteripse@114`, name: `西藏天佑德青稞酒业有限责任公司`, longitude: `82.177735`, latitude: `32.731934`, value: Math.floor(Math.random() * 500)},
       {id: `Enteripse@114`, name: `西藏天佑德青稞酒业有限责任公司`, longitude: `82.177735`, latitude: `32.731934`, value: Math.floor(Math.random() * 500)},
       {id: `OtherPollutionInfo@82`, name: `医疗废物处理中心--热解焚化炉`, longitude: `81.435242`, latitude: `33.090305`, value: Math.floor(Math.random() * 500)},
@@ -77,7 +367,6 @@ export default class GisMap extends OlMap {
     this.heatmapOverlay.setDataSet(data2);
     // this.heatmapOverlay.toggle(true); // true 关闭
     this.heatmapOverlay.toggle(true);
-    this.heatmapOverlay.toggleRemove();
     let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
     let marker = this._addIconMarkersByName(single, '', `/static/images/png/1.png`, this);
     this.markers.push(marker);
@@ -97,29 +386,27 @@ export default class GisMap extends OlMap {
     this.animationOverlay.push(markera3);
 
     let rdm = Math.floor(Math.random() * 7);
-    // console.log(rdm);
     let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
     this.animationOverlay.push(markerByGif);
-
+    // this.beforeDestroy();
+    data2.data.forEach((item) => {
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5]);
+        this.animationOverlay.push(markerByGif);
+    });
     this.beforeDestroy();
-
-    // data2.data.forEach((item) => {
-    //   this._addVirtualizationMarkers(item);
-    // });
-    // data2.data.forEach((item) => {
-    //   let falg = containsCoordinate(currentBounds, [item.longitude, item.latitude]);
-    //   // let pixel = this.map.getPixelFromCoordinate(['91.718333', '29.630278']);
-    //   console.log(this.map.getEventPixel(['91.718333', '29.630278']));
-    //   // console.log(containsXY(currentBounds, pixel[0], pixel[1]));
-    //   if (falg) {
-    //     console.log(falg);
-    //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5]);
-    //     this.animationOverlay.push(markerByGif);
-    //   }
-    // });
+    let options = {
+      map: this.map,
+      data: data
+    };
+    let animationOverlayObject = new AnimationOverlay(options);
+    animationOverlayObject.open();
+    animationOverlayObject.close();
   }
   beforeDestroy() {
-    this.heatmapOverlay = null;
+    if (this.heatmapOverlay) {
+      this.heatmapOverlay.toggleRemove();
+      this.heatmapOverlay = null;
+    }
     this.animationOverlay.forEach((item) => {
       this.map.removeOverlay(item);
     });

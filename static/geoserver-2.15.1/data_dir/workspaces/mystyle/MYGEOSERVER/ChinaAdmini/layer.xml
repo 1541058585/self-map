@@ -1,0 +1,15 @@
+<layer>
+  <name>ChinaAdmini</name>
+  <id>LayerInfoImpl-3b750fcf:16c64f6085d:-7ff9</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-1c5d5310:16c5125da4c:-7ff9</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-3b750fcf:16c64f6085d:-7ffa</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

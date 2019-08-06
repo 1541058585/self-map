@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
+<?xml version="1.0" encoding="GB2312"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
     <sld:UserLayer>
         <sld:LayerFeatureConstraints>
             <sld:FeatureTypeConstraint/>
@@ -15,7 +15,7 @@
                        <sld:Title>省[1]</sld:Title>
                        <ogc:Filter>
                           <ogc:PropertyIsEqualTo>
-                              <ogc:PropertyName>grade</ogc:PropertyName>
+                              <ogc:PropertyName>AREA_LEVEL</ogc:PropertyName>
                               <ogc:Literal>1</ogc:Literal>
                           </ogc:PropertyIsEqualTo>
 						</ogc:Filter>
@@ -29,11 +29,11 @@
                        <sld:TextSymbolizer>
                          			  <sld:Geometry>
                                       <ogc:Function name="centroid">
-                                          <ogc:PropertyName>shape</ogc:PropertyName>
+                                          <ogc:PropertyName>the_geom</ogc:PropertyName>
                                       </ogc:Function>
                                   </sld:Geometry>
                                   <sld:Label>
-                                      <ogc:PropertyName>name</ogc:PropertyName>
+                                      <ogc:PropertyName>NAME</ogc:PropertyName>
                                   </sld:Label>
                                   <sld:Font>
                                       <sld:CssParameter name="font-family">黑体</sld:CssParameter>
@@ -71,7 +71,7 @@
 							<sld:Title>市[2]</sld:Title>
 							<ogc:Filter>
 								<ogc:PropertyIsEqualTo>
-									<ogc:PropertyName>grade</ogc:PropertyName>
+									<ogc:PropertyName>AREA_LEVEL</ogc:PropertyName>
 									<ogc:Literal>2</ogc:Literal>
 								</ogc:PropertyIsEqualTo>
 							</ogc:Filter>
@@ -86,11 +86,11 @@
 							<sld:TextSymbolizer>
                       <sld:Geometry>
                          <ogc:Function name="centroid">
-                              <ogc:PropertyName>shape</ogc:PropertyName>
+                              <ogc:PropertyName>the_geom</ogc:PropertyName>
                          </ogc:Function>
                       </sld:Geometry>
 								<sld:Label>
-									<ogc:PropertyName>name</ogc:PropertyName>
+									<ogc:PropertyName>NAME</ogc:PropertyName>
 								</sld:Label>
 								<sld:Font>
 									<sld:CssParameter name="font-family">黑体</sld:CssParameter>
@@ -127,7 +127,7 @@
 					<sld:Title>县[3]</sld:Title>
                     <ogc:Filter>
                         <ogc:PropertyIsEqualTo>
-                            <ogc:PropertyName>grade</ogc:PropertyName>
+                            <ogc:PropertyName>AREA_LEVEL</ogc:PropertyName>
                             <ogc:Literal>3</ogc:Literal>
                         </ogc:PropertyIsEqualTo>
                     </ogc:Filter>
@@ -142,11 +142,11 @@
                     <sld:TextSymbolizer>
                       <sld:Geometry>
                          <ogc:Function name="centroid">
-                              <ogc:PropertyName>shape</ogc:PropertyName>
+                              <ogc:PropertyName>the_geom</ogc:PropertyName>
                          </ogc:Function>
                       </sld:Geometry>
 								<sld:Label>
-									<ogc:PropertyName>name</ogc:PropertyName>
+									<ogc:PropertyName>NAME</ogc:PropertyName>
 								</sld:Label>
 								<sld:Font>
 									<sld:CssParameter name="font-family">黑体</sld:CssParameter>
@@ -183,7 +183,7 @@
 							<sld:Title>街道[4]</sld:Title>
 							<ogc:Filter>
 								<ogc:PropertyIsEqualTo>
-									<ogc:PropertyName>grade</ogc:PropertyName>
+									<ogc:PropertyName>AREA_LEVEL</ogc:PropertyName>
 									<ogc:Literal>4</ogc:Literal>
 								</ogc:PropertyIsEqualTo>
 							</ogc:Filter>
@@ -198,11 +198,11 @@
 							<sld:TextSymbolizer>
                            <sld:Geometry>
                                <ogc:Function name="centroid">
-                                    <ogc:PropertyName>shape</ogc:PropertyName>
+                                    <ogc:PropertyName>the_geom</ogc:PropertyName>
                                </ogc:Function>
                            </sld:Geometry>
 										<sld:Label>
-											<ogc:PropertyName>name</ogc:PropertyName>
+											<ogc:PropertyName>NAME</ogc:PropertyName>
 										</sld:Label>
 										<sld:Font>
 											<sld:CssParameter name="font-family">黑体</sld:CssParameter>

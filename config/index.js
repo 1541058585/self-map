@@ -19,6 +19,13 @@ module.exports = {
           "^/olMap": ""
         }
       },
+      "/geoServer": {
+        target: `http://localhost:8889/geoserver`,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/geoServer": "/"
+        }
+      }
     },
 
     // Various Dev Server settings

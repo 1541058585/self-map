@@ -401,6 +401,8 @@ export default class GisMap extends OlMap {
     let animationOverlayObject = new AnimationOverlay(options);
     animationOverlayObject.open();
     animationOverlayObject.close();
+
+    // this._addLayerImageWMS('/geoServer/mystyle/wms', { 'LAYERS': 'mystyle:ChinaAdmini' }, 2, 6);
   }
   beforeDestroy() {
     if (this.heatmapOverlay) {
@@ -419,5 +421,6 @@ export default class GisMap extends OlMap {
       });
     });
     this.markers = [];
+    this._beforeDestroy();
   }
 }

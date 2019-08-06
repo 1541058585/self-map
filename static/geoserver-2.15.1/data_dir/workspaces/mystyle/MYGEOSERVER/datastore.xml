@@ -1,0 +1,22 @@
+<dataStore>
+  <id>DataStoreInfoImpl-3b750fcf:16c64f6085d:-7ffd</id>
+  <name>MYGEOSERVER</name>
+  <type>Directory of spatial files (shapefiles)</type>
+  <enabled>true</enabled>
+  <workspace>
+    <id>WorkspaceInfoImpl-1c5d5310:16c5125da4c:-7ffd</id>
+  </workspace>
+  <connectionParameters>
+    <entry key="charset">GB2312</entry>
+    <entry key="filetype">shapefile</entry>
+    <entry key="create spatial index">true</entry>
+    <entry key="memory mapped buffer">false</entry>
+    <entry key="timezone">Asia/Shanghai</entry>
+    <entry key="enable spatial index">true</entry>
+    <entry key="namespace">www.mystyle.com</entry>
+    <entry key="cache and reuse memory maps">true</entry>
+    <entry key="url">file:data/adminidivision</entry>
+    <entry key="fstype">shape</entry>
+  </connectionParameters>
+  <__default>false</__default>
+</dataStore>

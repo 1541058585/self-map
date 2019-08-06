@@ -421,6 +421,6 @@ export default class GisMap extends OlMap {
       });
     });
     this.markers = [];
-    this._beforeDestroy();
+    // this._beforeDestroy();
   }
 }

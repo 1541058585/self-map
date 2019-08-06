@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GB2312"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
+<?xml version="1.0" encoding="gb2312"?><sld:StyledLayerDescriptor xmlns="http://www.opengis.net/sld" xmlns:sld="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" version="1.0.0">
     <sld:UserLayer>
         <sld:LayerFeatureConstraints>
             <sld:FeatureTypeConstraint/>
@@ -20,7 +20,7 @@
                           </ogc:PropertyIsEqualTo>
 						</ogc:Filter>
 					          <sld:MinScaleDenominator>8000000.0</sld:MinScaleDenominator>
-                       <sld:MaxScaleDenominator>10000000.0</sld:MaxScaleDenominator>
+                       <sld:MaxScaleDenominator>40000000.0</sld:MaxScaleDenominator>
                        <sld:PolygonSymbolizer>
                                    <sld:Stroke>
                                        <sld:CssParameter name="stroke">#4A4AFF</sld:CssParameter>

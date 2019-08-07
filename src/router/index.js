@@ -20,6 +20,11 @@ export default new Router({
       path: '/heatmap',
       name: 'heatmap',
       component: () => import('@/page/heatmap')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('@/page/test')
     }
   ]
 })

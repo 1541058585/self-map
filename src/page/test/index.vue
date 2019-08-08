@@ -10,11 +10,12 @@
     import Map from 'ol/Map.js';
     import View from 'ol/View.js';
     import GeoJSON from 'ol/format/GeoJSON.js';
-    import VectorLayer from 'ol/layer/Vector.js';
     import Projection from 'ol/proj/Projection.js';
     import VectorSource from 'ol/source/Vector.js';
     import { register } from 'ol/proj/proj4.js';
     import proj4 from 'proj4';
+    import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
+    import XYZ from 'ol/source/XYZ';
     export default {
       mounted() {
         proj4.defs('ESRI:53009', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +a=6371000 ' + '+b=6371000 +units=m +no_defs');
@@ -27,7 +28,6 @@
           extent: [-9009954.605703328, -9009954.605703328, 9009954.605703328, 9009954.605703328],
           worldExtent: [-179, -89.99, 179, 89.99]
         });
-
         let map = new Map({
           target: 'cesiumContainer',
           keyboardEventTarget: document,
@@ -46,7 +46,7 @@
             zoom: 0
           })
         });
-
+        let url = `http://t0.tianditu.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=af73935c47c82d3fdba88eb23a4b6607`
         let graticule = new Graticule({
           map: map
         });
@@ -68,6 +68,7 @@
       overflow: hidden;
       position: relative;
       z-index: 1;
+      /*background-image: url('/static/tianditu/SkyBox/tycho2t3_80_mx.jpg');*/
     }
   }
 </style>

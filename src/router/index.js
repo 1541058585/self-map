@@ -25,6 +25,11 @@ export default new Router({
       path: '/test',
       name: 'test',
       component: () => import('@/page/test')
+    },
+    {
+      path: '/cesium',
+      name: 'cesium',
+      component: () => import('@/page/olmap/cesium/Cesium')
     }
   ]
 })

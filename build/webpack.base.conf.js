@@ -75,6 +75,12 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      { // 解决Cesium 警告报错
+        test: /\.js\.map$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ],
     unknownContextRegExp: /^.\/.*$/, //打印载入特定库时候的警告

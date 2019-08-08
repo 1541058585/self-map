@@ -40,7 +40,7 @@
         // Cesium3DTileset用来实现大范围的模型场景数据的加载应用
         // 三维倾斜模型、人工建模、BIM模型等等，都可以转换成3DTiles
         this.tileset = this.viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-          url: '../static/Cesium/Assets/Model/Model.json', // 数据路径
+          url: '../static/Cesium/Assets/approximateTerrainHeights.json', // 数据路径
           dynamicScreenSpaceError: true,
           cullWithChildrenBounds: false,
           // 当skipLevelOfDetail为true，是一个常量，用于定义加载切片时要跳过的最小级别数。

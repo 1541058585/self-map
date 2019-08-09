@@ -737,6 +737,7 @@ export default class OlMap {
     this.wmsLayer.push(wmsLayer);
     let view = this.map.getView();
     view.setZoom(zoom);
+    return wmsLayer;
   }
   _returnNumber(zoom) {
     let num = 0;

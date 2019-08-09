@@ -105,6 +105,7 @@ export default class HeatmapOverlay extends VectorLayer {
       let latlng = [entry[this.conf.lngField], entry[this.conf.latField]];
       this.latlngs.push({ latlng: latlng, count: entry.value }); // 提供给heatmap使用
     }
+    this._reset();
   }
   /**
    *  @private

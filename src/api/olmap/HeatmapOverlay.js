@@ -173,6 +173,7 @@ export default class HeatmapOverlay extends VectorLayer {
       generatedData.data = latLngPoints;
 
       this.heatmap.setData(generatedData);
+      this._map.updateSize();
   }
   /**
    *  @操作地图的时候绘制

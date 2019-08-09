@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import GisMap from '@/api/olmap/gismap.js';
+    import GisMap from '@/api/olmap/GisMap.js';
     import AppUrlConfig from '@/api/config/app-url-config.js';
     export default {
        data() {

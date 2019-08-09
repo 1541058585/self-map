@@ -13,29 +13,13 @@ import { assign } from 'ol/obj.js';
  * AUTHOR：CYQ
  * TIME: 2019-07-25
  * DESCRIBE:
- *  let config = {
-      radius: 0.5,
-      maxOpacity: 0.8,
-      scaleRadius: true,
-      useLocalExtrema: true,
-      visible: true,
-      latField: 'latitude',
-      lngField: 'longitude',
-      valueField: 'value'
-    };
- let data2 = {
-      max: 500,
-      min: 100,
-      data: data
-    };
- this.heatmapOverlay = new HeatmapOverlay({
-      config: config,
-      map: this.map
-    });
- this.heatmapOverlay.setDataSet(data2);
- // this.heatmapOverlay.toggle(true); // true 关闭
- this.heatmapOverlay.toggle(false);
- this.heatmapOverlay.onRemove();//完全释放对象，并释放内存
+ *  let config = { radius: 0.5, maxOpacity: 0.8, scaleRadius: true, useLocalExtrema: true, visible: true, latField: 'latitude', lngField: 'longitude', valueField: 'value' };
+ *  let data2 = { max: 500, min: 100, data: data };
+ *  this.heatmapOverlay = new HeatmapOverlay({ config: config, map: this.map });
+ *  this.heatmapOverlay.setDataSet(data2);
+ *  this.heatmapOverlay.toggle(true); // true 关闭
+ *  this.heatmapOverlay.toggle(false);
+ *  this.heatmapOverlay.onRemove();//完全释放对象，并释放内存
  * **/
 export default class HeatmapOverlay extends VectorLayer {
   constructor(opt0ptions) {

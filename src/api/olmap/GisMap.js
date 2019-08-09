@@ -1,4 +1,4 @@
-import OlMap from './olmap.js'
+import OlMap from './OlMap.js'
 import { HeatmapOverlayExtend } from '@/api/tianditu-map/HeatmapOverlayExtend.js';
 import HeatmapVectorLayer from './HeatmapVectorLayer.js'
 import { Vector as VectorSource } from 'ol/source.js';

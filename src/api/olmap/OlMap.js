@@ -237,7 +237,38 @@ export default class OlMap {
   };
   /**
    * @private
-   * 添加带图标，带文字的maerker
+   * 添加带图标的marker点 :舍弃不使用 一个marker一张Vector，超级消耗内存资源
+   **/
+  _addIconMarkersVector(data, icon, _this) {
+    let iconFeature = new Feature({
+      geometry: new Point([data.longitude, data.latitude]),
+      name: data.name,
+      population: 4000,
+      rainfall: 500
+    });
+    if (icon) {
+      iconFeature.set('style', this._createStyle(icon, undefined, ''));
+    } else {
+      iconFeature.set('style');
+    }
+    iconFeature.data = data;
+    let source = new VectorSource({
+      features: [iconFeature],
+      wrapX: false
+    })
+    let vector = new VectorLayer({
+      style: function (feature) {
+        return feature.get('style');
+      },
+      source: source
+    });
+
+    _this.map.addLayer(vector);
+    return vector;
+  }
+  /**
+   * @private
+   * 添加带图标，带文字的marker
    **/
   _addIconMarkersByName(data, name, icon, _this) {
     let iconFeature = new Feature({

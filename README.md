@@ -37,7 +37,10 @@ remark：地图上遇到的问题:在地图里面踩过的坑。
         5.一起来看看openlayers的api,以及openlayers的源码，你会发现什么？
           ---- ECMAScript 6 http://es6.ruanyifeng.com/#docs/class
           ---- https://github.com/openlayers/openlayers/blob/v5.3.0/src/ol
-          extends :子类可以继承父类的属性和方法，也可以扩展自己的属性和方法;
+          extends :
+            ----子类可以继承父类的属性和方法，也可以扩展自己的属性和方法;
+            ----子类构造的时候会默认通过super()来调用父类的构造方法。初始化子类的时候，先调用父类的默认构造，再调用子类的构造。
+            ----在调用子类的方法时会先在子类中寻找那个方法，找到后调用成功，否则再去父类中找想要调用的方法。如果在子类中找到了那个方法，则子类重写了父类的方法。
         6.大家都知道的天地图支持动态gif图标，然而开源的openlayers不支持gif图标，怎么解决？
             一.使用css样式支持openlayers的png图标闪烁。
             二.感受过了天地图，如何来实现让openlayers支持gif图标的。

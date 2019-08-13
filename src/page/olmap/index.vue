@@ -1,6 +1,7 @@
 <template>
   <div class="ol-map">
     <div id="one-olmap" class="one-olmap">
+      <text-box v-if="false" :olmap="olmap"></text-box>
     </div>
   </div>
 </template>
@@ -11,9 +12,13 @@
     export default {
        data() {
          return {
+           olmapflag: false,
            olmap: null
          }
        },
+        components: {
+          TextBox: () => import('./component/TextBox')
+        },
         mounted() {
           this.$nextTick(() => {
             AppUrlConfig.configServer().then(res => {
@@ -21,6 +26,7 @@
               if (olmap instanceof GisMap) {
                 olmap.initMap();
                 this.olmap = olmap;
+                this.olmapflag = true;
               }
             });
           })
@@ -29,6 +35,7 @@
          if (this.olmap) {
            this.olmap.beforeDestroy();
            delete this.olmap;
+           this.olmapflag = false;
          }
         }
     }

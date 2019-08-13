@@ -15,6 +15,7 @@ import TestData from './TestData.js';
 export default class GisMap extends OlMap {
   constructor(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection) {
     super(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection);
+    this.searchKey = '';
     this.minZoom = 6;
     this.zoom = 6
     this.heatmapOverlay = null;
@@ -129,6 +130,12 @@ export default class GisMap extends OlMap {
   // _addIconMarkersVector(data, icon, _this) {
   //   debugger
   // }
+  setSearchKey(val) {
+    this.searchKey = val;
+  }
+  getSearchKey() {
+    return this.searchKey;
+  }
   beforeDestroy() {
     if (this.heatmapOverlay) {
       this.heatmapOverlay.toggleRemove();

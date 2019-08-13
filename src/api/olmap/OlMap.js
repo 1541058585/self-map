@@ -230,7 +230,7 @@ export default class OlMap {
     } else {
       iconFeature.set('style');
     }
-    iconFeature.setId(data.id);
+    // iconFeature.setId(data.id);
     iconFeature.data = data;
     this.MarkerVectorLayer.getSource().addFeature(iconFeature);
     return iconFeature;

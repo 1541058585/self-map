@@ -770,7 +770,7 @@ export default class OlMap {
     view.setZoom(zoom);
     return wmsLayer;
   }
-  _returnNumber(zoom) {
+  static _returnNumber(zoom) {
     let num = 0;
     if (zoom === 8) {
       num = 1

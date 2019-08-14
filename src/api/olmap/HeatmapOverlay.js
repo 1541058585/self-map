@@ -19,7 +19,7 @@ import { assign } from 'ol/obj.js';
  *  this.heatmapOverlay.setDataSet(data2);
  *  this.heatmapOverlay.toggle(true); // true 关闭
  *  this.heatmapOverlay.toggle(false);
- *  this.heatmapOverlay.onRemove();//完全释放对象，并释放内存
+ *  this.heatmapOverlay.toggleRemove();//完全释放对象，并释放内存
  * **/
 export default class HeatmapOverlay extends VectorLayer {
   constructor(opt0ptions) {

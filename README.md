@@ -34,6 +34,7 @@ remark：地图上遇到的问题:在地图里面踩过的坑。
         2.看看2018的天地图（https://map.tianditu.gov.cn/），我当时抓取的网站源码（这是天地图用vue刚刚改版完,最新的，当时网站还没有设置安全策略，恰巧抓取的）
         3.那以后，来看看我之前是如何仿照天地图来封装vue组件的。
         4.地图变革，为什么我们要从天地图api变革到openlayers的api,技术选型，都经历了哪些痛！
+          openlayer：优点：开源，开源，开源，还有就是说按需引用，不需要的可以不引用。
         5.一起来看看openlayers的api,以及openlayers的源码，你会发现什么？
           ---- ECMAScript 6 http://es6.ruanyifeng.com/#docs/class
           ---- https://github.com/openlayers/openlayers/blob/v5.3.0/src/ol

@@ -28,7 +28,7 @@ export default class HeatmapOverlay extends VectorLayer {
     super(baseOptions);
     this.conf = options.config;
     this._map = options.map;
-    this.listener = 'pointermove'; // 'moveend' ||'pointermove' 一个消耗性能低一个消耗性能严重。
+    this.listener = 'moveend'; // 'moveend' ||'pointermove' 一个消耗性能低一个消耗性能严重。
     this.el = DomUtil.create('div', 'canvas-zoom-map');
     this.heatmap = null;
     this.moveendListener = null;

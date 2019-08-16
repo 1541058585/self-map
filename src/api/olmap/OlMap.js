@@ -21,7 +21,7 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 import { getWidth, getTopLeft, getCenter as getExtentCenter } from 'ol/extent.js';
 import ImageLayer from 'ol/layer/Image.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
-/*
+/**
  * AUTHOR：CYQ
  * DESCRIBE: 基类js 禁止修改，如需增加内容，请以继承的方式实现自身的业务逻辑，例如：class BusinessMap extends OlMap
  *  提示:如果非不得已，需要修改基类的方法，请在修改前请，查询你要修改的方法，在系统其它地方是否在使用，并保证相关使用的正常。
@@ -30,7 +30,9 @@ import ImageWMS from 'ol/source/ImageWMS.js';
  *  versions: 1.1
  *  版本纪要 : 1.0 升级到1.1
  *  版本差异：新增系统类型，新增自适应区域（可以使用自定义默认地图范围），当前版本支持的地图有:1.默认天地图，2.四川天地图，3.西藏天地图，4.高德地图
- */
+ *  版本纪要 : 1.1 升级到1.1.1
+ *  版本差异：支持gif 图片 创建地图带样式的动画效果，image: gif
+ **/
 export default class OlMap {
   /**
    *  配置：systemType：系统类型(区分不同系统之间地图功能的差异性，开放和提供给实现类使用)
@@ -43,23 +45,23 @@ export default class OlMap {
    *  layerType: 叠加不同底图  底图类型 列如：'', 'TianDiTu_sichuan' . 'TianDiTu_xizang', 'GaoDeDiTu'，‘BaiDuDiTu’，
    *  projection：坐标系
    * */
-  constructor(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection) {
-    if (systemType) { // 系统类型
-      this.$type = systemType;
+  constructor(opt0ptions) {
+    if (opt0ptions.systemType) { // 系统类型
+      this.$type = opt0ptions.systemType;
     } else {
       this.$type = '';
     }
-    if (fitExtent) { // 自适应区域
-      this.$fitExtent = fitExtent
+    if (opt0ptions.fitExtent) { // 自适应区域
+      this.$fitExtent = opt0ptions.fitExtent
     } else {
       this.$fitExtent = [-180.0, -90.0, 180.0, 90.0] // 默认范围;
     }
     this.$extentFlag = false; // 默认不限制地图可视化范围
-    if (target) { this.target = target } else { this.target = 'ol-map' }
-    if (tmapkey) { this.T_MAP_KEY = tmapkey; } else { this.T_MAP_KEY = null; }
-    if (center) { this.center = center } else { this.center = [104.08, 30.67] } // 中心点
-    if (zoom) { this.zoom = zoom } else { this.zoom = 8 }
-    if (projection) { this.projection = projection } else { this.projection = 'EPSG:4326' }
+    if (opt0ptions.target) { this.target = opt0ptions.target } else { this.target = 'ol-map' }
+    if (opt0ptions.tmapkey) { this.T_MAP_KEY = opt0ptions.tmapkey; } else { this.T_MAP_KEY = null; }
+    if (opt0ptions.center) { this.center = opt0ptions.center } else { this.center = [104.08, 30.67] } // 中心点
+    if (opt0ptions.zoom) { this.zoom = opt0ptions.zoom } else { this.zoom = 8 }
+    if (opt0ptions.projection) { this.projection = opt0ptions.projection } else { this.projection = 'EPSG:4326' }
     this.layers = [
       { name: '平面地图', id: 'vec_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
       { name: '遥感影像', id: 'img_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
@@ -70,8 +72,8 @@ export default class OlMap {
       text: '正在初始化地图.....',
       flag: false
     };
-    if (minZoom) {
-      this.minZoom = minZoom;
+    if (opt0ptions.minZoom) {
+      this.minZoom = opt0ptions.minZoom;
     } else {
       this.minZoom = 8;
     }
@@ -79,8 +81,8 @@ export default class OlMap {
     this.map = null;
     this.tileLayerMap = null; // 底图
     this.tileLayerCnName = null;// 对应底图的文字
-    if (layerType) {
-      this.layerType = layerType;
+    if (opt0ptions.layerType) {
+      this.layerType = opt0ptions.layerType;
     } else {
       this.layerType = ''; // 底图类型 列如：'', 'TianDiTu_sichuan' . 'TianDiTu_xizang', 'GaoDeDiTu'，‘BaiDuDiTu’
     }
@@ -801,45 +803,6 @@ export default class OlMap {
     }
     return num;
   }
-  _earthQuakesToHeatMap(heatData, radius, blur) {
-    let features = [];
-    heatData.forEach((item) => {
-      let feature = new Feature({
-        geometry: new Point([item.longitude, item.latitude]),
-        id: item.id,
-        name: item.name,
-        value: item.value,
-        weight: 1
-      });
-      feature.setProperties(item);
-      features.push(feature);
-    });
-    let source = new VectorSource({
-      features: features
-    });
-    this.HeatmapLayer = new HeatmapLayer({
-      source: source,
-      blur: blur,
-      radius: radius,
-      zIndex: 1,
-      visible: true,
-      shadow: 100000
-    });
-    this.map.addLayer(this.HeatmapLayer);
-    let changeResolution = (e) => {
-      let zoom = this.map.getView().getZoom();
-      let Resolution = this.map.getView().getResolution();
-      let Scale = 1 / Resolution * 72;
-      let radius = Scale / 1000;
-      let blur = Scale / 1000 * 2;
-      if (this.HeatmapLayer) {
-        this.HeatmapLayer.setRadius(Scale / 1000);
-        this.HeatmapLayer.setBlur((Scale / 1000) * 2);
-      }
-    };
-    this.map.getView().on('change:resolution', changeResolution);
-    return changeResolution;
-  };
   /**
    *  返回地图可视区域，以地理坐标表示
    * */

@@ -22,7 +22,17 @@
         mounted() {
           this.$nextTick(() => {
             AppUrlConfig.configServer().then(res => {
-              let olmap = new GisMap(res.type, 'one-olmap', res.T_MAP_KEY, res.MAP_CENTER_, null, res.MAP_MinZoom_, res.MAP_Extent_, res.MAP_LAYER_Type_);
+              let options = {
+                systemType: res.type,
+                target: 'one-olmap',
+                tmapkey: res.T_MAP_KEY,
+                center: res.MAP_CENTER_,
+                zoom: null,
+                minZoom: res.MAP_MinZoom_,
+                fitExtent: res.MAP_Extent_,
+                layerType: res.MAP_LAYER_Type_
+              }
+              let olmap = new GisMap(options);
               if (olmap instanceof GisMap) {
                 olmap.initMap();
                 this.olmap = olmap;

@@ -4,7 +4,7 @@ import HeatmapVectorLayer from './HeatmapVectorLayer.js'
 import { Vector as VectorSource } from 'ol/source.js';
 import { containsCoordinate, containsXY } from 'ol/extent.js'
 import { intersectsCoordinate } from 'ol/geom/Geometry.js'
-
+import { assign } from 'ol/obj.js';
 import HeatmapOverlay from './HeatmapOverlay.js';
 import MousePosition from 'ol/control/MousePosition';
 import { createStringXY } from 'ol/coordinate';
@@ -13,8 +13,10 @@ import AnimationOverlay from './AnimationOverlay.js';
 import TestData from './TestData.js';
 
 export default class GisMap extends OlMap {
-  constructor(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection) {
-    super(systemType, target, tmapkey, center, zoom, minZoom, fitExtent, layerType, projection);
+  constructor(opt0ptions) {
+    const options = opt0ptions !== {} ? opt0ptions : {};
+    const baseOptions = assign({}, options);
+    super(baseOptions);
     this.searchKey = '';
     this.minZoom = 6;
     this.zoom = 6

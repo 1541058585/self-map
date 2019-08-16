@@ -706,7 +706,7 @@ export default class OlMap {
     } else if (this.layerType === 'GaoDeDiTu') { // 高德地图 olMap === http://webst0{1-4}.is.autonavi.com
       // 新版地址 http://wprd0{1-4}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=7
       // 老版本地址 http://webst0{1-4}.is.autonavi.com/appmaptile?style=7&x={x}&y={y}&z={z}
-      let url = `/GaoDeDiTu/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=8`;
+      let url = `http://wprd0{1-4}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=7`;
       this.tileLayerMap = this._addUrlTileLayer(url, 0);
       this.map.addLayer(this.tileLayerMap);
     } else if (this.layerType === 'BaiDuDiTu') { // 百度地图

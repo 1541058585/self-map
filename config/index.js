@@ -32,6 +32,13 @@ module.exports = {
           "^/TianDiTu_xizang": ""
         }
       },
+      "/GaoDeDiTu": {
+        target: 'http://wprd0{1-4}.is.autonavi.com',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/GaoDeDiTu": ""
+        }
+      },
       "/geoServer": {
         target: `http://localhost:8889/geoserver`,
         changeOrigin: true,

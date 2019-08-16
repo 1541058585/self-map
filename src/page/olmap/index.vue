@@ -7,6 +7,7 @@
           <li @click="switchMap('')">国家地理信息公共服务平台 天地图</li>
           <li @click="switchMap('TianDiTu_sichuan')">天地图.四川</li>
           <li @click="switchMap('TianDiTu_xizang')">天地图.西藏</li>
+          <li @click="switchMap('GaoDeDiTu')">高德地图</li>
         </ul>
     </div>
     <div id="one-olmap" class="one-olmap">

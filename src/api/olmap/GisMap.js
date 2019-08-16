@@ -25,7 +25,10 @@ export default class GisMap extends OlMap {
     this.animationOverlay = []; // 传统方式
     this.animationOverlayObject = null; // 对象的方式
   }
-  initMap() {
+  initMap(layerType) {
+    if (layerType !== null) {
+      this.layerType = layerType;
+    }
     this._createMap();
 
     let coor = new MousePosition({

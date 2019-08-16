@@ -62,12 +62,16 @@ export default class OlMap {
     if (opt0ptions.center) { this.center = opt0ptions.center } else { this.center = [104.08, 30.67] } // 中心点
     if (opt0ptions.zoom) { this.zoom = opt0ptions.zoom } else { this.zoom = 8 }
     if (opt0ptions.projection) { this.projection = opt0ptions.projection } else { this.projection = 'EPSG:4326' }
-    this.layers = [
-      { name: '平面地图', id: 'vec_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
-      { name: '遥感影像', id: 'img_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
-      { name: '地形地图', id: 'ter_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
-      { name: '三维', id: 'sw_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 0 }
-    ];
+    if (opt0ptions.layers) {
+      this.layers = opt0ptions.layers;
+    } else {
+      this.layers = [
+        { name: '平面地图', id: 'vec_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
+        { name: '遥感影像', id: 'img_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
+        { name: '地形地图', id: 'ter_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 1 },
+        { name: '三维', id: 'sw_type', url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png', isShow: 0 }
+      ];
+    }
     this.loading = {
       text: '正在初始化地图.....',
       flag: false
@@ -677,7 +681,18 @@ export default class OlMap {
     }
   }
   _addTileLayer() {
-    if (this.layerType === 'TianDiTu_xizang') { // 西藏  // olMap === http://211.92.244.108:81
+    if (this.layerType === 'OSM') { // openlayers OSM 自身的地图
+      this.tileLayerMap = new TileLayer({
+        source: new OSM()
+      });
+      this.map.addLayer(this.tileLayerMap);
+    } else if (this.layerType === 'XYZ') { // openlayers XYZ 地图
+      this.tileLayerMap = new TileLayer({
+        source: new XYZ({ url: this.layers[0].url }),
+        wrapX: false
+      });
+      this.map.addLayer(this.tileLayerMap);
+    } else if (this.layerType === 'TianDiTu_xizang') { // 西藏  // olMap === http://211.92.244.108:81
       let _vecURLs = `/olMap/vec_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
       let _cvaURLs = `/olMap/cva_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
       this.tileLayerMap = this._addTileLayerWmts(_vecURLs, 'vec_c', 0);

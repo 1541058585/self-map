@@ -693,20 +693,20 @@ export default class OlMap {
       });
       this.map.addLayer(this.tileLayerMap);
     } else if (this.layerType === 'TianDiTu_xizang') { // 西藏  // olMap === http://211.92.244.108:81
-      let _vecURLs = `/olMap/vec_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
-      let _cvaURLs = `/olMap/cva_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
+      let _vecURLs = `/TianDiTu_xizang/vec_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
+      let _cvaURLs = `/TianDiTu_xizang/cva_c/wmts?"+"SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cva&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&`;
       this.tileLayerMap = this._addTileLayerWmts(_vecURLs, 'vec_c', 0);
       this.tileLayerCnName = this._addTileLayerWmts(_cvaURLs, 'cva_c', 1);
       this.map.addLayer(this.tileLayerMap);
       this.map.addLayer(this.tileLayerCnName);
     } else if (this.layerType === 'TianDiTu_sichuan') { // olMap === http://www.scgis.net.cn
-      let _vecURLs = `/olMap/imap/imapserver/defaultrest/services/sctilemap/WMTS`;
+      let _vecURLs = `/TianDiTu_sichuan/imap/imapserver/defaultrest/services/sctilemap/WMTS`;
       this.tileLayerMap = this._addTileLayerWmts(_vecURLs, 'vec_c', 0);
       this.map.addLayer(this.tileLayerMap);
     } else if (this.layerType === 'GaoDeDiTu') { // 高德地图 olMap === http://webst0{1-4}.is.autonavi.com
       // 新版地址 http://wprd0{1-4}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=7
       // 老版本地址 http://webst0{1-4}.is.autonavi.com/appmaptile?style=7&x={x}&y={y}&z={z}
-      let url = `/olMap/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=8`;
+      let url = `/GaoDeDiTu/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=1&style=8`;
       this.tileLayerMap = this._addUrlTileLayer(url, 0);
       this.map.addLayer(this.tileLayerMap);
     } else if (this.layerType === 'BaiDuDiTu') { // 百度地图

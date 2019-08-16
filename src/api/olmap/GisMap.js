@@ -79,8 +79,8 @@ export default class GisMap extends OlMap {
     //   this.markers.push(marker);
     // });
     // 方法重新
-    let single1111 = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
-    let marker = this._addIconMarkersVector(single1111, `/static/images/png/3.png`, this);
+    // let single1111 = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
+    // let marker = this._addIconMarkersVector(single1111, `/static/images/png/3.png`, this);
 
     // this.heatmapOverlay = new HeatmapOverlay({
     //   config: config,
@@ -140,6 +140,25 @@ export default class GisMap extends OlMap {
   }
   getSearchKey() {
     return this.searchKey;
+  }
+  switchMap(layers) {
+    if (this.tileLayerMap) {
+      this.map.removeLayer(this.tileLayerMap);
+      this.tileLayerMap = null
+    }
+    if (this.tileLayerCnName) {
+      this.map.removeLayer(this.tileLayerCnName);
+      this.tileLayerCnName = null
+    }
+    this.layerType = layers;
+    this._addTileLayer();
+    let view = this.map.getView();
+    if (layers === 'TianDiTu_xizang') {
+      view.setZoom(9);
+    } else {
+      view.setZoom(5);
+    }
+    this.map.updateSize();
   }
   beforeDestroy() {
     if (this.heatmapOverlay) {

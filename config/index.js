@@ -12,11 +12,24 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/olMap": {
-        // target: `http://t5.tianditu.gov.cn`,
-        target: 'http://www.scgis.net.cn',
+        target: `http://t5.tianditu.gov.cn`,
         changeOrigin: true,
         pathRewrite: {
           "^/olMap": ""
+        }
+      },
+      "/TianDiTu_sichuan": {
+        target: 'http://www.scgis.net.cn',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/TianDiTu_sichuan": ""
+        }
+      },
+      "/TianDiTu_xizang": {
+        target: 'http://211.92.244.108:81',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/TianDiTu_xizang": ""
         }
       },
       "/geoServer": {

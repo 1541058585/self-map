@@ -2,10 +2,11 @@
   <div class="ol-map">
     <div class="left">
         <ul class="menu">
-          <li>openlayers自身地图</li>
-          <li>111</li>
-          <li>111</li>
-          <li>111</li>
+          <li @click="switchMap('OSM')">openlayers地图OSM形式</li>
+          <li @click="switchMap('XYZ')">openlayers地图XYZ形式</li>
+          <li @click="switchMap('')">国家地理信息公共服务平台 天地图</li>
+          <li @click="switchMap('TianDiTu_sichuan')">天地图.四川</li>
+          <li @click="switchMap('TianDiTu_xizang')">天地图.西藏</li>
         </ul>
     </div>
     <div id="one-olmap" class="one-olmap">
@@ -49,6 +50,11 @@
             });
           })
         },
+        methods: {
+          switchMap(layer) {
+            this.olmap.switchMap(layer);
+          }
+        },
         beforeDestroy() {
          if (this.olmap) {
            this.olmap.beforeDestroy();
@@ -68,7 +74,7 @@
     left: 0;
     padding: 0;
     .left{
-      width: 0px;
+      width: 200px;
       height: calc(100%);
       overflow: hidden;
       position: relative;
@@ -84,6 +90,12 @@
           background: #ffa935;
           border: 1px solid #040404;
           margin: 20px auto;
+          font-size: 12px;
+          &:hover{
+            cursor: pointer;
+            background: linear-gradient(90deg, rgba(255,191,39,1), rgba(74, 165, 255, 1));
+            color: white;
+          }
         }
       }
       ul.menu{
@@ -92,7 +104,7 @@
       }
     }
     .one-olmap{
-      width: calc(100%);
+      width: calc(100% - 200px);
       height: calc(100%);
       overflow: hidden;
       position: relative;

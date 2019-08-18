@@ -513,9 +513,9 @@ export default class OlMap {
    * 计算地图中心点
    * */
   _computeMapCenter(json) {
-    // let longitude = (parseFloat(json.maxLng) + parseFloat(json.minLng)) / 2;
-    // let latitude = (parseFloat(json.maxLat) + parseFloat(json.minLat)) / 2;
-    return { longitude: this.center[0], latitude: this.center[1] };
+    let longitude = (parseFloat(json.maxLng) + parseFloat(json.minLng)) / 2;
+    let latitude = (parseFloat(json.maxLat) + parseFloat(json.minLat)) / 2;
+    return { longitude: longitude, latitude: latitude };
   };
   /**
    *  解析面数据，线数据

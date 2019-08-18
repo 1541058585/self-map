@@ -211,11 +211,11 @@ export default class GisMap extends OlMap {
         this.animationOverlay.push(markerByGif);
       }
       if (item.id === '2') {
-        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/2.gif`,  [-20, -20]);
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/2.gif`, [-20, -20]);
         this.animationOverlay.push(markerByGif);
       }
       if (item.id === '3') {
-        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/3.gif`,  [-20, -20]);
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/3.gif`, [-20, -20]);
         this.animationOverlay.push(markerByGif);
       }
     });

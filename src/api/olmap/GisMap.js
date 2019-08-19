@@ -148,6 +148,22 @@ export default class GisMap extends OlMap {
 
     this.singleclickListener = (e) => {
       console.log(this.map.getLayers());
+      let pixel = this.map.getEventPixel(e.originalEvent);
+      let feature = this.map.forEachFeatureAtPixel(pixel, (feature, layer) => {
+        return feature;
+      });
+      if (feature) {
+        let data = feature.data;
+        let html = `
+              <div class="popup-title-content">
+                <div class="popup-title">
+                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+                </div>
+              </div>`;
+        let coordinates = [data.longitude, data.latitude];
+        this._showPopup(coordinates, html, [5, -20]);
+      }
     };
     this.map.on('singleclick', this.singleclickListener);
   }
@@ -185,6 +201,7 @@ export default class GisMap extends OlMap {
     let marker = this._addIconMarkersByName(single, '', `/static/images/png/1.png`, this);
     this.markers.push(marker);
     this._setZoom(8, [single.longitude, single.latitude]);
+    this.map.on('singleclick', this.singleclickListener);
   }
   createMapByManyMarkerPNG(data) {
     this.beforeDestroy(); // 清空点位信息
@@ -195,6 +212,7 @@ export default class GisMap extends OlMap {
     let json = this._findMaxAndMinLngLat(data); // 得到最大最小经纬度计算 ----OlMap.js
     let lnglatJson = this._computeMapCenter(json); // 计算地图中心点 ----OlMap.js
     this._setZoom(5, [lnglatJson.longitude, lnglatJson.latitude]); // 设置 中心点位 ----OlMap.js
+    this.map.on('singleclick', this.singleclickListener);
   }
   createMarkerByCssPNG(data) {
     this.beforeDestroy(); // 清空点位信息
@@ -221,6 +239,7 @@ export default class GisMap extends OlMap {
     let json = this._findMaxAndMinLngLat(data); // 得到最大最小经纬度计算 ----OlMap.js
     let lnglatJson = this._computeMapCenter(json); // 计算地图中心点 ----OlMap.js
     this._setZoom(5, [lnglatJson.longitude, lnglatJson.latitude]); // 设置 中心点位 ----OlMap.js
+    this.map.on('singleclick', this.singleclickListener);
   }
   createMarkerByGif(data) {
     this.beforeDestroy(); // 清空点位信息

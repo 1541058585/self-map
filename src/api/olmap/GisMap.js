@@ -110,11 +110,29 @@ export default class GisMap extends OlMap {
 
     let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
     let rdm = Math.floor(Math.random() * 7);
-    let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
+    let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5], data => {
+      let html = `
+        <div class="popup-title-content">
+          <div class="popup-title">
+            <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+            <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+          </div>
+        </div>`;
+      this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+    });
     this.animationOverlay.push(markerByGif);
     // // this.beforeDestroy();
     // data2.data.forEach((item) => {
-    //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5]);
+    //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5], data => {
+    //       let html = `
+    //         <div class="popup-title-content">
+    //           <div class="popup-title">
+    //             <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+    //             <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+    //           </div>
+    //         </div>`;
+    //       this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+    //     });
     //     this.animationOverlay.push(markerByGif);
     // });
     // this.beforeDestroy();
@@ -208,15 +226,42 @@ export default class GisMap extends OlMap {
     this.beforeDestroy(); // 清空点位信息
     data.forEach((item) => {
       if (item.id === '1') {
-        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/1.gif`, [-20, -20]);
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/1.gif`, [-20, -20], data => {
+          let html = `
+              <div class="popup-title-content">
+                <div class="popup-title">
+                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+                </div>
+              </div>`;
+          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+        });
         this.animationOverlay.push(markerByGif);
       }
       if (item.id === '2') {
-        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/2.gif`, [-20, -20]);
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/2.gif`, [-20, -20], data => {
+          let html = `
+              <div class="popup-title-content">
+                <div class="popup-title">
+                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+                </div>
+              </div>`;
+          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+        });
         this.animationOverlay.push(markerByGif);
       }
       if (item.id === '3') {
-        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/3.gif`, [-20, -20]);
+        let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/3.gif`, [-20, -20], data => {
+          let html = `
+              <div class="popup-title-content">
+                <div class="popup-title">
+                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+                </div>
+              </div>`;
+          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+        });
         this.animationOverlay.push(markerByGif);
       }
     });

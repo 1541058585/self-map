@@ -325,7 +325,7 @@ export default class OlMap {
    * @private 支持gif 图片
    * 创建地图带样式的动画效果，image: gif
    **/
-  _createMarkerAnimationByGif(data, icon, offset) {
+  _createMarkerAnimationByGif(data, icon, offset, callback) {
     let olMarker = document.createElement('div');
     olMarker.id = `${data.id}`;
     olMarker.style.width = '50px';
@@ -346,16 +346,11 @@ export default class OlMap {
       this.map.addOverlay(overlay);
       this.map.updateSize();
     }
-    olMarker.onclick = (e) => {
-      let html = `
-        <div class="popup-title-content">
-          <div class="popup-title">
-            <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-            <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
-          </div>
-        </div>`;
-      this._showPopup(coordinates, html, [22, 10]);
-    };
+    if (callback) {
+      olMarker.onclick = (e) => {
+        callback(data);
+      };
+    }
     return overlay;
   }
   /**

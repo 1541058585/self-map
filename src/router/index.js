@@ -22,11 +22,6 @@ export default new Router({
       component: () => import('@/page/heatmap')
     },
     {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/page/test')
-    },
-    {
       path: '/cesium',
       name: 'cesium',
       component: () => import('@/page/olmap/cesium/Cesium')

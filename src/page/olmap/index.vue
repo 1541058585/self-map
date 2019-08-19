@@ -19,6 +19,16 @@
     <div id="one-olmap" class="one-olmap">
       <text-box v-if="false" :olmap="olmap"></text-box>
     </div>
+    <div id="popup" class="ol-popup">
+      <div id="popup-content" class="popup-content">
+        <div class="popup-title-content">
+          <div class="popup-title">
+            <a id="popup-name" title="${single.name != null ? single.name : ''}"  class="popup-name"></a>
+            <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -135,7 +145,7 @@
     left: 0;
     padding: 0;
     .left{
-      width: 200px;
+      width: 0px;
       height: calc(100%);
       overflow: hidden;
       position: relative;
@@ -165,7 +175,7 @@
       }
     }
     .one-olmap{
-      width: calc(100% - 200px);
+      width: calc(100%);
       height: calc(100%);
       overflow: hidden;
       position: relative;
@@ -173,4 +183,7 @@
       float: left;
     }
   }
+</style>
+<style lang="scss">
+  @import "../../assets/css/popup-content.scss";
 </style>

@@ -234,7 +234,7 @@ export default class GisMap extends OlMap {
                   <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
                 </div>
               </div>`;
-          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+          this._showPopup([data.longitude, data.latitude], html, [6, 0]);
         });
         this.animationOverlay.push(markerByGif);
       }
@@ -247,7 +247,7 @@ export default class GisMap extends OlMap {
                   <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
                 </div>
               </div>`;
-          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+          this._showPopup([data.longitude, data.latitude], html, [6, 0]);
         });
         this.animationOverlay.push(markerByGif);
       }
@@ -260,7 +260,7 @@ export default class GisMap extends OlMap {
                   <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
                 </div>
               </div>`;
-          this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+          this._showPopup([data.longitude, data.latitude], html, [6, 0]);
         });
         this.animationOverlay.push(markerByGif);
       }

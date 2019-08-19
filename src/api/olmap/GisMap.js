@@ -108,9 +108,10 @@ export default class GisMap extends OlMap {
     // let markera3 = this._createMarkerAnimation(single3, 'css_green_animation_overlay', '<p></p>', [-5, -6]);
     // this.animationOverlay.push(markera3);
 
-    // let rdm = Math.floor(Math.random() * 7);
-    // let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
-    // this.animationOverlay.push(markerByGif);
+    let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
+    let rdm = Math.floor(Math.random() * 7);
+    let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5]);
+    this.animationOverlay.push(markerByGif);
     // // this.beforeDestroy();
     // data2.data.forEach((item) => {
     //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5]);

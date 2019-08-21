@@ -108,19 +108,19 @@ export default class GisMap extends OlMap {
     // let markera3 = this._createMarkerAnimation(single3, 'css_green_animation_overlay', '<p></p>', [-5, -6]);
     // this.animationOverlay.push(markera3);
 
-    let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
-    let rdm = Math.floor(Math.random() * 7);
-    let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5], data => {
-      let html = `
-        <div class="popup-title-content">
-          <div class="popup-title">
-            <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-            <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
-          </div>
-        </div>`;
-      this._showPopup([data.longitude, data.latitude], html, [22, 10]);
-    });
-    this.animationOverlay.push(markerByGif);
+    // let single = {id: `Enteripse@116`, name: `西藏甘露藏药股份有限公司`, longitude: `91.718333`, latitude: `29.630278`, value: 250};
+    // let rdm = Math.floor(Math.random() * 7);
+    // let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5], data => {
+    //   let html = `
+    //     <div class="popup-title-content">
+    //       <div class="popup-title">
+    //         <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
+    //         <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+    //       </div>
+    //     </div>`;
+    //   this._showPopup([data.longitude, data.latitude], html, [22, 10]);
+    // });
+    // this.animationOverlay.push(markerByGif);
     // // this.beforeDestroy();
     // data2.data.forEach((item) => {
     //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5], data => {
@@ -145,7 +145,8 @@ export default class GisMap extends OlMap {
     // animationOverlayObject.close();
 
     // this._addLayerImageWMS('/geoServer/mystyle/wms', { 'LAYERS': 'mystyle:ChinaAdmini' }, 2, 6);
-
+    // this._addLayerImageWMS('/geoServer/zvanlasa/wms', { 'LAYERS': 'zvanlasa:GARDEN_PLAN' }, 2, 6);
+    // this._setZoom(13, [103.70, 30.38]); // 设置 中心点位 ----OlMap.js
     this.singleclickListener = (e) => {
       console.log(this.map.getLayers());
       let pixel = this.map.getEventPixel(e.originalEvent);

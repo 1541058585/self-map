@@ -1,0 +1,15 @@
+<layer>
+  <name>HP_GIS_ROAD_CENTRE_LINE_PART</name>
+  <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fe1</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-393895a8:16cb3a72e33:-7ff6</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-393895a8:16cb3a72e33:-7fe2</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

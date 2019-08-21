@@ -1,0 +1,15 @@
+<layer>
+  <name>HP_GARDEN_PLAN</name>
+  <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fe9</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-393895a8:16cb3a72e33:-7ff8</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-393895a8:16cb3a72e33:-7fea</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

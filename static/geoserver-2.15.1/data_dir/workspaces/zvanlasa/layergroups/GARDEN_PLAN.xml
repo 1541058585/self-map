@@ -1,0 +1,44 @@
+<layerGroup>
+  <id>LayerGroupInfoImpl-393895a8:16cb3a72e33:-7fe0</id>
+  <name>GARDEN_PLAN</name>
+  <mode>SINGLE</mode>
+  <title>规划园区</title>
+  <workspace>
+    <id>WorkspaceInfoImpl-653ccdfd:16ac5601f83:-7fff</id>
+  </workspace>
+  <publishables>
+    <published type="layer">
+      <id>LayerInfoImpl-393895a8:16cb3a72e33:-7ff1</id>
+    </published>
+    <published type="layer">
+      <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fed</id>
+    </published>
+    <published type="layer">
+      <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fe5</id>
+    </published>
+    <published type="layer">
+      <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fe9</id>
+    </published>
+    <published type="layer">
+      <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fe1</id>
+    </published>
+  </publishables>
+  <styles>
+    <style/>
+    <style/>
+    <style/>
+    <style/>
+    <style/>
+  </styles>
+  <bounds>
+    <minx>103.59120468964477</minx>
+    <maxx>103.7695330738923</maxx>
+    <miny>30.297145655047984</miny>
+    <maxy>30.43257330291567</maxy>
+    <crs>EPSG:4326</crs>
+  </bounds>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layerGroup>

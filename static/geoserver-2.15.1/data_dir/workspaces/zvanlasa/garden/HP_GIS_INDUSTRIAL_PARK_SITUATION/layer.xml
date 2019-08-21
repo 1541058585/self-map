@@ -1,0 +1,15 @@
+<layer>
+  <name>HP_GIS_INDUSTRIAL_PARK_SITUATION</name>
+  <id>LayerInfoImpl-393895a8:16cb3a72e33:-7fed</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-393895a8:16cb3a72e33:-7ffc</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-393895a8:16cb3a72e33:-7fee</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

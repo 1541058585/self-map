@@ -1,0 +1,15 @@
+<layer>
+  <name>HP_GIS_RIVER_POLYGON</name>
+  <id>LayerInfoImpl-393895a8:16cb3a72e33:-7ff1</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-393895a8:16cb3a72e33:-7ffe</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-393895a8:16cb3a72e33:-7ff2</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

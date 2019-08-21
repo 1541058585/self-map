@@ -1,0 +1,53 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-393895a8:16cb3a72e33:-7fe6</id>
+  <name>HP_GIS_ROAD_CENTRE_LINE</name>
+  <nativeName>HP_GIS_ROAD_CENTRE_LINE</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-653ccdfd:16ac5601f83:-7ffe</id>
+  </namespace>
+  <title>HP_GIS_ROAD_CENTRE_LINE</title>
+  <keywords>
+    <string>features</string>
+    <string>HP_GIS_ROAD_CENTRE_LINE</string>
+  </keywords>
+  <nativeCRS>GEOGCS[&quot;WGS 84&quot;, &#xd;
+  DATUM[&quot;World Geodetic System 1984&quot;, &#xd;
+    SPHEROID[&quot;WGS 84&quot;, 6378137.0, 298.257223563, AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]], &#xd;
+    AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]], &#xd;
+  PRIMEM[&quot;Greenwich&quot;, 0.0, AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]], &#xd;
+  UNIT[&quot;degree&quot;, 0.017453292519943295], &#xd;
+  AXIS[&quot;Geodetic longitude&quot;, EAST], &#xd;
+  AXIS[&quot;Geodetic latitude&quot;, NORTH], &#xd;
+  AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]]</nativeCRS>
+  <srs>EPSG:4326</srs>
+  <nativeBoundingBox>
+    <minx>103.65109000779768</minx>
+    <maxx>103.75446037974277</maxx>
+    <miny>30.34496625319008</miny>
+    <maxy>30.4064669147164</maxy>
+    <crs>EPSG:4326</crs>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>103.65109000779768</minx>
+    <maxx>103.75446037974277</maxx>
+    <miny>30.34496625319008</miny>
+    <maxy>30.4064669147164</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <metadata>
+    <entry key="cachingEnabled">false</entry>
+  </metadata>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-393895a8:16cb3a72e33:-7ff5</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

@@ -294,6 +294,11 @@ export default class GisMap extends OlMap {
     this._addLayerImageWMS('/geoServer/mystyle/wms', { 'LAYERS': 'mystyle:ChinaAdmini' }, 2, 6);
     this._setZoom(5, this.center); // 设置 中心点位 ----OlMap.js
   }
+  addGardenPlan() {
+    this.beforeDestroy();
+    this._addLayerImageWMS('/geoServer/zvanlasa/wms', { 'LAYERS': 'zvanlasa:GARDEN_PLAN' }, 2, 6);
+    this._setZoom(13, [103.70, 30.38]); // 设置 中心点位 ----OlMap.js
+  }
   addHeatmapOverlay() {
     this.beforeDestroy();
     let data = [

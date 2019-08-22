@@ -13,6 +13,7 @@
           <li @click="createMarkerByCssPNG()">使用css样式支持openlayers的png图标闪烁</li>
           <li @click="createMarkerByGif()">实现让openlayers支持gif图标的</li>
           <li @click="addChinaAdmini()">叠加行政区划图层</li>
+          <li @click="addGardenPlan()">规划园区</li>
           <li @click="addHeatmapOverlay()">热力图</li>
         </ul>
     </div>
@@ -124,6 +125,9 @@
           },
           addHeatmapOverlay() {
             this.olmap.addHeatmapOverlay();
+          },
+          addGardenPlan() {
+            this.olmap.addGardenPlan();
           }
         },
         beforeDestroy() {

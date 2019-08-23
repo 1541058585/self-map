@@ -9,8 +9,10 @@ import HeatmapOverlay from './HeatmapOverlay.js';
 import MousePosition from 'ol/control/MousePosition';
 import { createStringXY } from 'ol/coordinate';
 import AnimationOverlay from './AnimationOverlay.js';
+import { transform, transformExtent, get as getProjection } from 'ol/proj.js';
 
 import TestData from './TestData.js';
+import AppUrlConfig from '@/api/config/app-url-config.js';
 
 export default class GisMap extends OlMap {
   constructor(opt0ptions) {
@@ -52,6 +54,9 @@ export default class GisMap extends OlMap {
       min: 0,
       data: TestData.pointData
     };
+    // let a = [11580130.329479408, 3586333.0507255998];
+    // let b = transform(a, 'EPSG:900913', 'EPSG:4326');
+    // console.log(b);
     // 方法的差异性
     // data2.data.forEach((item) => {
     //       let marker = this._addIconMarkersVector(item, `/static/images/png/1.png`, this);
@@ -112,10 +117,10 @@ export default class GisMap extends OlMap {
     // let rdm = Math.floor(Math.random() * 7);
     // let markerByGif = this._createMarkerAnimationByGif(single, `/static/images/gif/${rdm}.gif`, [-5, -5], data => {
     //   let html = `
-    //     <div class="popup-title-content">
-    //       <div class="popup-title">
-    //         <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-    //         <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+    //     <div class=popup-title-content>
+    //       <div class=popup-title>
+    //         <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+    //         <a href=# id=popup-closer class=ol-popup-closer closer></a>
     //       </div>
     //     </div>`;
     //   this._showPopup([data.longitude, data.latitude], html, [22, 10]);
@@ -125,10 +130,10 @@ export default class GisMap extends OlMap {
     // data2.data.forEach((item) => {
     //     let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/${Math.floor(Math.random() * 7)}.gif`, [-5, -5], data => {
     //       let html = `
-    //         <div class="popup-title-content">
-    //           <div class="popup-title">
-    //             <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-    //             <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+    //         <div class=popup-title-content>
+    //           <div class=popup-title>
+    //             <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+    //             <a href=# id=popup-closer class=ol-popup-closer closer></a>
     //           </div>
     //         </div>`;
     //       this._showPopup([data.longitude, data.latitude], html, [22, 10]);
@@ -147,6 +152,7 @@ export default class GisMap extends OlMap {
     // this._addLayerImageWMS('/geoServer/mystyle/wms', { 'LAYERS': 'mystyle:ChinaAdmini' }, 2, 6);
     // this._addLayerImageWMS('/geoServer/zvanlasa/wms', { 'LAYERS': 'zvanlasa:GARDEN_PLAN' }, 2, 6);
     // this._setZoom(13, [103.70, 30.38]); // 设置 中心点位 ----OlMap.js
+    this.create900913();
     this.singleclickListener = (e) => {
       console.log(this.map.getLayers());
       let pixel = this.map.getEventPixel(e.originalEvent);
@@ -156,10 +162,10 @@ export default class GisMap extends OlMap {
       if (feature) {
         let data = feature.data;
         let html = `
-              <div class="popup-title-content">
-                <div class="popup-title">
-                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+              <div class=popup-title-content>
+                <div class=popup-title>
+                  <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+                  <a href=# id=popup-closer class=ol-popup-closer closer></a>
                 </div>
               </div>`;
         let coordinates = [data.longitude, data.latitude];
@@ -248,10 +254,10 @@ export default class GisMap extends OlMap {
       if (item.id === '1') {
         let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/1.gif`, [-20, -20], data => {
           let html = `
-              <div class="popup-title-content">
-                <div class="popup-title">
-                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+              <div class=popup-title-content>
+                <div class=popup-title>
+                  <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+                  <a href=# id=popup-closer class=ol-popup-closer closer></a>
                 </div>
               </div>`;
           this._showPopup([data.longitude, data.latitude], html, [6, 0]);
@@ -261,10 +267,10 @@ export default class GisMap extends OlMap {
       if (item.id === '2') {
         let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/2.gif`, [-20, -20], data => {
           let html = `
-              <div class="popup-title-content">
-                <div class="popup-title">
-                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+              <div class=popup-title-content>
+                <div class=popup-title>
+                  <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+                  <a href=# id=popup-closer class=ol-popup-closer closer></a>
                 </div>
               </div>`;
           this._showPopup([data.longitude, data.latitude], html, [6, 0]);
@@ -274,10 +280,10 @@ export default class GisMap extends OlMap {
       if (item.id === '3') {
         let markerByGif = this._createMarkerAnimationByGif(item, `/static/images/gif/3.gif`, [-20, -20], data => {
           let html = `
-              <div class="popup-title-content">
-                <div class="popup-title">
-                  <a id="popup-name" title="${data.name != null ? data.name : ''}"  class="popup-name">${data.name != null ? data.name : ''}</a>
-                  <a href="#" id="popup-closer" class="ol-popup-closer closer"></a>
+              <div class=popup-title-content>
+                <div class=popup-title>
+                  <a id=popup-name title=${data.name != null ? data.name : ''}  class=popup-name>${data.name != null ? data.name : ''}</a>
+                  <a href=# id=popup-closer class=ol-popup-closer closer></a>
                 </div>
               </div>`;
           this._showPopup([data.longitude, data.latitude], html, [6, 0]);
@@ -352,6 +358,16 @@ export default class GisMap extends OlMap {
     });
     this.heatmapOverlay.setDataSet(data2);
     this.heatmapOverlay.toggle(false);
+  }
+  create900913() {
+    AppUrlConfig.get900913Json().then(res => {
+      res.forEach((item) => {
+        let transPoint = transform([item.X, item.Y], 'EPSG:900913', 'EPSG:4326');
+        let transJson = { longitude: transPoint[0], latitude: transPoint[1] }
+        let marker = this._addIconMarkersByName(transJson, '', `/static/images/png/3.png`, this);
+        this.markers.push(marker);
+      });
+    });
   }
   beforeDestroy() {
     if (this.heatmapOverlay) {

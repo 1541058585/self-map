@@ -9,4 +9,10 @@ export default class AppUrlConfig {
         });
         return configObject;
     }
+    static get900913Json() {
+      let configObject = app.get(`/static/900913.json`).then(res => {
+        return res;
+      });
+      return configObject;
+    }
 }

@@ -149,7 +149,7 @@
     left: 0;
     padding: 0;
     .left{
-      width: 0px;
+      width: 200px;
       height: calc(100%);
       overflow: hidden;
       position: relative;
@@ -179,7 +179,7 @@
       }
     }
     .one-olmap{
-      width: calc(100%);
+      width: calc(100% - 200px);
       height: calc(100%);
       overflow: hidden;
       position: relative;

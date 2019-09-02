@@ -152,13 +152,16 @@ export default class GisMap extends OlMap {
     // this._addLayerImageWMS('/geoServer/mystyle/wms', { 'LAYERS': 'mystyle:ChinaAdmini' }, 2, 6);
     // this._addLayerImageWMS('/geoServer/zvanlasa/wms', { 'LAYERS': 'zvanlasa:GARDEN_PLAN' }, 2, 6);
     // this._setZoom(13, [103.70, 30.38]); // 设置 中心点位 ----OlMap.js
-    this.create900913();
+    // this.create900913();
     this.singleclickListener = (e) => {
-      console.log(this.map.getLayers());
+      // console.log(this.map.getLayers());
       let pixel = this.map.getEventPixel(e.originalEvent);
       let feature = this.map.forEachFeatureAtPixel(pixel, (feature, layer) => {
         return feature;
       });
+      console.log(e.coordinate);
+      let transPoint = transform(e.coordinate, 'EPSG:4326', 'EPSG:900913');
+      console.log(transPoint);
       if (feature) {
         let data = feature.data;
         let html = `

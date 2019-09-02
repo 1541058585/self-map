@@ -153,6 +153,7 @@ export default class GisMap extends OlMap {
     // this._addLayerImageWMS('/geoServer/zvanlasa/wms', { 'LAYERS': 'zvanlasa:GARDEN_PLAN' }, 2, 6);
     // this._setZoom(13, [103.70, 30.38]); // 设置 中心点位 ----OlMap.js
     // this.create900913();
+    this.createAtmosphereModel();
     this.singleclickListener = (e) => {
       // console.log(this.map.getLayers());
       let pixel = this.map.getEventPixel(e.originalEvent);
@@ -369,6 +370,13 @@ export default class GisMap extends OlMap {
         let transJson = { longitude: transPoint[0], latitude: transPoint[1] }
         let marker = this._addIconMarkersByName(transJson, '', `/static/images/png/3.png`, this);
         this.markers.push(marker);
+      });
+    });
+  }
+  createAtmosphereModel() { // 创建大气扩散模型
+    AppUrlConfig.getAtmosphere().then(res => {
+      res.forEach((item) => {
+        console.log(item);
       });
     });
   }

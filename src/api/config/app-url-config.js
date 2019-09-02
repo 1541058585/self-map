@@ -15,4 +15,10 @@ export default class AppUrlConfig {
       });
       return configObject;
     }
+  static getAtmosphere() { // 大气扩散模型的数据
+    let configObject = app.get(`/static/test-data/atmosphere.json`).then(res => {
+      return res;
+    });
+    return configObject;
+  }
 }

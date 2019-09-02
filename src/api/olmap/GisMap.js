@@ -400,13 +400,13 @@ export default class GisMap extends OlMap {
         // console.log(polygon.toString());
         let data = { id: '1', name: `${num}` };
         if (num === 1) {
-          this.showSinglePolygon(data, polygon.toString(), 3, 'red');
+          this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
         }
         if (num === 2) {
-          this.showSinglePolygon(data, polygon.toString(), 2, 'yellow');
+          this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
         }
         if (num === 3) {
-          this.showSinglePolygon(data, polygon.toString(), 1, 'green');
+          this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
         }
       });
     });
@@ -415,8 +415,7 @@ export default class GisMap extends OlMap {
     let styles = [
       new Style({
         fill: new Fill({
-          color: color,
-          opacity: 0.5
+          color: color
         }),
         text: new Text({
           text: feature.get('name'),
@@ -429,7 +428,7 @@ export default class GisMap extends OlMap {
     ];
     return styles;
   }
-  showSinglePolygon(data, polygon, zIndex, color) { // 方法重新
+  showSinglePolygon(data, polygon, zIndex, color, opacity) { // 方法重新
     let _points = this._transPoints(polygon);
     _points = [_points];
     let feature = new Feature({
@@ -437,9 +436,9 @@ export default class GisMap extends OlMap {
       name: data.name
     });
     feature.setId(data.id);
-    let highAlpColor = asArray('#1fca04');
+    let highAlpColor = asArray(color);
     highAlpColor = highAlpColor.slice();
-    highAlpColor[3] = 0.9;
+    highAlpColor[3] = opacity;
     feature.set('style', this._createPolygonStyleSetColor(feature, highAlpColor));
     feature.data = data;
     let source = new VectorSource({

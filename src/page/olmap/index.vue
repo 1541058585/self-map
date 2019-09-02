@@ -2,6 +2,7 @@
   <div class="ol-map">
     <div class="left">
         <ul class="menu">
+          <li @click="createAtmosphereModel()">大气扩散模型</li>
           <li @click="switchMap('OSM')">openlayers地图OSM形式</li>
           <li @click="switchMap('XYZ')">openlayers地图XYZ形式</li>
           <li @click="switchMap('')">国家地理信息公共服务平台 天地图</li>
@@ -14,6 +15,10 @@
           <li @click="createMarkerByGif()">实现让openlayers支持gif图标的</li>
           <li @click="addChinaAdmini()">叠加行政区划图层</li>
           <li @click="addGardenPlan()">规划园区</li>
+          <li @click="addHeatmapOverlay()">热力图</li>
+          <li @click="addHeatmapOverlay()">热力图</li>
+          <li @click="addHeatmapOverlay()">热力图</li>
+          <li @click="addHeatmapOverlay()">热力图</li>
           <li @click="addHeatmapOverlay()">热力图</li>
         </ul>
     </div>
@@ -128,6 +133,9 @@
           },
           addGardenPlan() {
             this.olmap.addGardenPlan();
+          },
+          createAtmosphereModel() {
+            this.olmap.createAtmosphereModel();
           }
         },
         beforeDestroy() {
@@ -149,12 +157,13 @@
     left: 0;
     padding: 0;
     .left{
-      width: 0px;
+      width: 200px;
       height: calc(100%);
       overflow: hidden;
       position: relative;
       z-index: 1;
       float: left;
+      overflow-y: auto;
       ul {
         list-style-type: none;
         margin: 0;
@@ -179,7 +188,7 @@
       }
     }
     .one-olmap{
-      width: calc(100%);
+      width: calc(100% - 200px);
       height: calc(100%);
       overflow: hidden;
       position: relative;

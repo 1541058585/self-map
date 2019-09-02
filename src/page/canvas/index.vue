@@ -1,9 +1,14 @@
 <template>
-    <canvas id="myCanvas" width="1200" height="800" style="border:1px solid #c3c3c3;"></canvas>
+    <div>
+      <Demo1></Demo1>
+    </div>
 </template>
 
 <script>
     export default {
+     components: {
+       Demo1: () => import('./component/demo2')
+     }
     }
 </script>
 

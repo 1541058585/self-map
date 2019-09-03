@@ -425,13 +425,13 @@ export default class GisMap extends OlMap {
             console.log(polygon.toString());
             let data = { id: '1', name: `${num}` };
             if (num === 1) {
-              this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
+              this.showSinglePolygon(data, polygon.toString(), 1, '#ff0834', 0.8);
             }
             if (num === 2) {
               this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
             }
             if (num === 3) {
-              this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
+              this.showSinglePolygon(data, polygon.toString(), 3, '#1fca04', 0.8);
             }
       })
     });

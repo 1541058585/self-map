@@ -29,6 +29,26 @@
           cxt.strokeStyle = '#1fca04';
           cxt.stroke();// 画空心圆
           cxt.closePath();
+
+          cxt.beginPath();
+          // 径向渐变
+          let rg = cxt.createRadialGradient(380, 300, 150, 300, 300, 0);
+          // 添加颜色
+          rg.addColorStop(0.8, '#ff8c35');
+          rg.addColorStop(1, '#ff0834');
+          cxt.fillStyle = rg;
+          if (cxt.ellipse) {
+            // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise)是现在更新的，
+            // 参数的意思：(起点x.起点y,半径x,半径y,旋转的角度，起始角，结果角，顺时针还是逆时针)
+            cxt.ellipse(550, 300, 50, 30, 0, 0, Math.PI * 2)
+            cxt.fillStyle = 'red';
+            cxt.strokeStyle = 'white';
+            cxt.fill();
+            cxt.stroke();
+          } else {
+            alert('no ellipse!');
+          }
+          cxt.closePath();
         },
       methods: {
         paramEllipse(context, x, y, a, b) {

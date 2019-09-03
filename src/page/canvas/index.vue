@@ -7,7 +7,7 @@
 <script>
     export default {
      components: {
-       Demo: () => import('./component/demo3')
+       Demo: () => import('./component/demo4')
      }
     }
 </script>

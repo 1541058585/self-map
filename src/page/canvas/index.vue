@@ -1,13 +1,13 @@
 <template>
     <div>
-      <Demo1></Demo1>
+      <Demo></Demo>
     </div>
 </template>
 
 <script>
     export default {
      components: {
-       Demo1: () => import('./component/demo2')
+       Demo: () => import('./component/demo3')
      }
     }
 </script>

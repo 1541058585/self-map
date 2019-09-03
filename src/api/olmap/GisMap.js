@@ -383,32 +383,57 @@ export default class GisMap extends OlMap {
   }
   createAtmosphereModel() { // 创建大气扩散模型
     let polygonArray = [];
+    // AppUrlConfig.getAtmosphere().then(res => {
+    //   let num = 0;
+    //   res.forEach((item) => {
+    //     console.log(item.ImpactRegions[0]);
+    //     num++;
+    //     let polygon = [];
+    //     item.ImpactRegions[0].forEach((item2) => {
+    //       let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
+    //       polygon.push(`${transPoint[0]}|${transPoint[1]}`);
+    //       // let transJson = { longitude: transPoint[0], latitude: transPoint[1] }
+    //       // let marker = this._addIconMarkersByName(transJson, '', `/static/images/png/${num}.png`, this);
+    //       // this.markers.push(marker);
+    //     });
+    //     polygon.push(polygon[0])
+    //     // console.log(polygon.toString());
+    //     let data = { id: '1', name: `${num}` };
+    //     if (num === 1) {
+    //       this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
+    //     }
+    //     if (num === 2) {
+    //       this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
+    //     }
+    //     if (num === 3) {
+    //       this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
+    //     }
+    //   });
+    // });
+
     AppUrlConfig.getAtmosphere().then(res => {
+      console.log(res);
       let num = 0;
-      res.forEach((item) => {
-        console.log(item.ImpactRegions[0]);
-        num++;
-        let polygon = [];
-        item.ImpactRegions[0].forEach((item2) => {
-          let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
-          polygon.push(`${transPoint[0]}|${transPoint[1]}`);
-          // let transJson = { longitude: transPoint[0], latitude: transPoint[1] }
-          // let marker = this._addIconMarkersByName(transJson, '', `/static/images/png/${num}.png`, this);
-          // this.markers.push(marker);
-        });
-        polygon.push(polygon[0])
-        // console.log(polygon.toString());
-        let data = { id: '1', name: `${num}` };
-        if (num === 1) {
-          this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
-        }
-        if (num === 2) {
-          this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
-        }
-        if (num === 3) {
-          this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
-        }
-      });
+      res[0].ImpactRegions.forEach((item) => {
+            num++;
+            let polygon = [];
+            item.forEach((item2) => {
+              let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
+              polygon.push(`${transPoint[0]}|${transPoint[1]}`);
+            });
+            polygon.push(polygon[0])
+            console.log(polygon.toString());
+            let data = { id: '1', name: `${num}` };
+            if (num === 1) {
+              this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
+            }
+            if (num === 2) {
+              this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
+            }
+            if (num === 3) {
+              this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
+            }
+      })
     });
   }
   _createPolygonStyleSetColor(feature, color) {

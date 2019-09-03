@@ -1,0 +1,9 @@
+圆弧绘制
+
+arc()
+    x 圆心横坐标
+    y 圆心纵坐标
+    r 半径
+    startAngle 开始角度
+    endAngle 结束角度
+    anticlockwise 是否逆时针方向绘制（默认false表示顺时针；true表示逆时针）

@@ -443,6 +443,7 @@ export default class GisMap extends OlMap {
         data: res[0]
       }
       let diffusionOverlay = new DiffusionOverlay(param);
+      diffusionOverlay.createDiffusion();
     });
   }
   _createPolygonStyleSetColor(feature, color) {

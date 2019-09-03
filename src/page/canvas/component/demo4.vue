@@ -27,10 +27,7 @@
         {x: 432, y: 305},
         {x: 382, y: 188},
         {x: 341, y: 188},
-        {x: 341, y: 188},
-      340, 284,
-      315, 240,
-      311, 207]
+        {x: 341, y: 188}]
       this.polygon(poly, cxt);
     },
     methods: {
@@ -53,7 +50,6 @@
         context.moveTo(poly[0], poly[1]);
         for (let i = 2; i < 8; i += 2) {
           context.arc(poly[i], poly[i], 50, 270 * Math.PI / 180, 0, false);
-          context.arcTo(x1,y1,x2,y2,10);
           // context.moveTo(300, 100);
           console.log(poly[i], poly[i + 1]);
         }

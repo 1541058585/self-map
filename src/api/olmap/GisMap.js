@@ -19,7 +19,7 @@ import { Circle as CircleStyle, Fill, Icon, Stroke, Style, Text } from 'ol/style
 
 import TestData from './TestData.js';
 import AppUrlConfig from '@/api/config/app-url-config.js';
-
+import DiffusionOverlay from './DiffusionOverlay';
 export default class GisMap extends OlMap {
   constructor(opt0ptions) {
     const options = opt0ptions !== {} ? opt0ptions : {};
@@ -411,29 +411,38 @@ export default class GisMap extends OlMap {
     //   });
     // });
 
+    // AppUrlConfig.getAtmosphere().then(res => {
+    //   console.log(res);
+    //   let num = 0;
+    //   res[0].ImpactRegions.forEach((item) => {
+    //         num++;
+    //         let polygon = [];
+    //         item.forEach((item2) => {
+    //           let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
+    //           polygon.push(`${transPoint[0]}|${transPoint[1]}`);
+    //         });
+    //         polygon.push(polygon[0])
+    //         console.log(polygon.toString());
+    //         let data = { id: '1', name: `${num}` };
+    //         if (num === 1) {
+    //           this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
+    //         }
+    //         if (num === 2) {
+    //           this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
+    //         }
+    //         if (num === 3) {
+    //           this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
+    //         }
+    //   })
+    // });
+
     AppUrlConfig.getAtmosphere().then(res => {
-      console.log(res);
-      let num = 0;
-      res[0].ImpactRegions.forEach((item) => {
-            num++;
-            let polygon = [];
-            item.forEach((item2) => {
-              let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
-              polygon.push(`${transPoint[0]}|${transPoint[1]}`);
-            });
-            polygon.push(polygon[0])
-            console.log(polygon.toString());
-            let data = { id: '1', name: `${num}` };
-            if (num === 1) {
-              this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
-            }
-            if (num === 2) {
-              this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
-            }
-            if (num === 3) {
-              this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
-            }
-      })
+      let param = {
+        map: this.map,
+        color: ['#ff0834', '#ff8c35', '#1fca04'],
+        data: res[0]
+      }
+      let diffusionOverlay = new DiffusionOverlay(param);
     });
   }
   _createPolygonStyleSetColor(feature, color) {

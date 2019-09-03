@@ -50,7 +50,9 @@ export default class DiffusionOverlay {
           let point = polygon[0].split('|');
           let coordinates = [point[0], point[1]];
           let radius = Number(this.data.SafeDistances[0]) / 122518.7141796344;
-          this.drawCircle(coordinates, radius, '#1fca04');
+          let polygonCircle = this.drawCircle(coordinates, radius, '#1fca04');
+          let extent = polygonCircle.getGeometry().getExtent();
+          this.map.getView().fit(extent, this.map.getSize());
         }
         if (num === 2) {
           this.polygonData.push(polygon);
@@ -69,7 +71,7 @@ export default class DiffusionOverlay {
           this.drawCircle(coordinates, radius, '#ff0834');
         }
       });
-      console.log(this.polygonData[0][0]);
+      // console.log(this.polygonData[0][0]);
     }
   }
   showSinglePolygon(data, polygon, zIndex, color, opacity) {

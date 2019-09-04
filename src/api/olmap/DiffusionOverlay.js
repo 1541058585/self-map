@@ -7,9 +7,13 @@ import { Circle as CircleStyle, Fill, Icon, Stroke, Style, Text } from 'ol/style
 import { Vector as VectorSource } from 'ol/source.js';
 import Circle from 'ol/geom/Circle';
 import Point from 'ol/geom/Point.js';
+import { getArea, getLength, getDistance } from 'ol/sphere.js';
 
 export default class DiffusionOverlay {
   constructor(opt0ptions) {
+    this.circleCenter = opt0ptions.circleCenter;
+    this.EPSG900913 = 'EPSG:900913';
+    this.EPSG4326 = 'EPSG:4326';
     this.map = opt0ptions.map;
     this.color = opt0ptions.color;
     this.data = opt0ptions.data;
@@ -38,7 +42,7 @@ export default class DiffusionOverlay {
         num++;
         let polygon = [];
         item.forEach((item2) => {
-          let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
+          let transPoint = transform([item2.X, item2.Y], this.EPSG900913, this.EPSG4326);
           polygon.push(`${transPoint[0]}|${transPoint[1]}`);
         });
         polygon.push(polygon[0])
@@ -48,9 +52,8 @@ export default class DiffusionOverlay {
           this.polygonData.push(polygon);
           this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
           let point = polygon[0].split('|');
-          let coordinates = [point[0], point[1]];
-          let radius = Number(this.data.SafeDistances[0]) / 122518.7141796344;
-          let polygonCircle = this.drawCircle(coordinates, radius, '#1fca04');
+          let radius = this._calculateRadius(this.data.SafeDistances[0]);
+          let polygonCircle = this.drawCircle(this.circleCenter, radius, '#1fca04');
           let extent = polygonCircle.getGeometry().getExtent();
           this.map.getView().fit(extent, this.map.getSize());
         }
@@ -58,17 +61,15 @@ export default class DiffusionOverlay {
           this.polygonData.push(polygon);
           this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
           let point = polygon[0].split('|');
-          let coordinates = [point[0], point[1]];
-          let radius = Number(this.data.SafeDistances[1]) / 122518.7141796344;
-          this.drawCircle(coordinates, radius, '#fff72b');
+          let radius = this._calculateRadius(this.data.SafeDistances[1]);
+          this.drawCircle(this.circleCenter, radius, '#fff72b');
         }
         if (num === 3) {
           this.polygonData.push(polygon);
           this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
           let point = polygon[0].split('|');
-          let coordinates = [point[0], point[1]];
-          let radius = Number(this.data.SafeDistances[2]) / 123518.7141796344;
-          this.drawCircle(coordinates, radius, '#ff0834');
+          let radius = this._calculateRadius(this.data.SafeDistances[2]);
+          this.drawCircle(this.circleCenter, radius, '#ff0834');
         }
       });
       // console.log(this.polygonData[0][0]);
@@ -146,4 +147,20 @@ export default class DiffusionOverlay {
       })
     });
   }
+  _calculateRadius(safeDistances) {
+    let startPoint = transform(this.circleCenter, this.EPSG4326, this.EPSG900913);
+    let endX = startPoint[0] + safeDistances;
+    let endPoint = [endX, startPoint[1]];
+    let transStartPoint = transform([startPoint[0], startPoint[1]], this.EPSG900913, this.EPSG4326);
+    let endStartPoint = transform([endPoint[0], endPoint[1]], this.EPSG900913, this.EPSG4326);
+    let distance = 0.0;
+
+    let dx = Math.pow(transStartPoint[0] - endStartPoint[0], 2);
+
+    let dy = Math.pow(transStartPoint[1] - endStartPoint[1], 2);
+
+    distance = Math.sqrt(dx + dy);
+
+    return distance;
+  };
 }

@@ -438,6 +438,7 @@ export default class GisMap extends OlMap {
 
     AppUrlConfig.getAtmosphere().then(res => {
       let param = {
+        circleCenter: [104.02584493160248, 30.642347037792206],
         map: this.map,
         color: ['#ff0834', '#ff8c35', '#1fca04'],
         data: res[0]

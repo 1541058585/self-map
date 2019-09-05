@@ -435,7 +435,13 @@ export default class GisMap extends OlMap {
     //         }
     //   })
     // });
-
+    // let single2 = {id: `OtherPollutionInfo@85`, name: `之维安`, longitude: `104.02584493160248`, latitude: `30.642347037792206`, value: Math.floor(Math.random() * 120)};
+    // let marker2 = this._addIconMarkersByName(single2, '', `/static/images/png/2.png`, this);
+    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:3857'));
+    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:102100'));
+    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:102113'));
+    console.log(transform([1493.0103431931493, -2147.5301151678418], 'EPSG:900913', 'EPSG:4326'));
+    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'CRS:84'));
     AppUrlConfig.getAtmosphere().then(res => {
       let param = {
         circleCenter: [104.02584493160248, 30.642347037792206],

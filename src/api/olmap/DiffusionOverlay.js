@@ -12,7 +12,7 @@ import { getArea, getLength, getDistance } from 'ol/sphere.js';
 export default class DiffusionOverlay {
   constructor(opt0ptions) {
     this.circleCenter = opt0ptions.circleCenter;
-    this.EPSG900913 = 'EPSG:900913';
+    this.EPSG900913 = 'EPSG:3857';
     this.EPSG4326 = 'EPSG:4326';
     this.map = opt0ptions.map;
     this.color = opt0ptions.color;

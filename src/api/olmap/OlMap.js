@@ -837,6 +837,41 @@ export default class OlMap {
     view.setMinZoom(min);
     view.setMaxZoom(max);
   }
+  /**
+   *  判断一个点是否在多边形内部
+   *  @param points 多边形坐标集合
+   *  @param testPoint 测试点坐标
+   *  返回true为真，false为假
+   *  */
+  _insidePolygon(points, testPoint) {
+    let x = testPoint[0];
+    let y = testPoint[1];
+    let inside = false;
+    for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+      let xi = points[i][0];
+      let yi = points[i][1];
+      let xj = points[j][0];
+      let yj = points[j][1];
+
+      let intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+    return inside;
+  }
+
+  /**
+   *  判断一个点是否在圆的内部
+   *  @param point  测试点坐标
+   *  @param circle 圆心坐标
+   *  @param r 圆半径
+   *  返回true为真，false为假
+   *  */
+  _pointInsideCircle(point, circle, r) {
+    if (r === 0) return false;
+    let dx = circle[0] - point[0];
+    let dy = circle[1] - point[1];
+    return dx * dx + dy * dy <= r * r
+  }
   _beforeDestroy() {
     if (this.wmsLayer.length > 0) {
       this.wmsLayer.forEach((item) => {

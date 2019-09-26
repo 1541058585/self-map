@@ -1,17 +1,32 @@
 <template>
   <div class="ol-map">
     <div id="one-olmap" class="one-olmap">
-      111
     </div>
   </div>
 </template>
 
 <script>
-    import GisMap from '@/api/olmap/GisMap.js';
     import AppUrlConfig from '@/api/config/app-url-config.js';
+    import Map from 'ol/Map.js';
+    import View from 'ol/View.js';
+    import TileLayer from 'ol/layer/Tile.js';
+    import OSM from 'ol/source/OSM.js';
     export default {
         mounted() {
           this.$nextTick(() => {
+            let map = new Map({
+              layers: [
+                new TileLayer({
+                  source: new OSM()
+                })
+              ],
+              target: 'one-olmap',
+              view: new View({
+                center: [0, 0],
+                projection: 'EPSG:3857',
+                zoom: 0
+              })
+            });
           });
         }
     }

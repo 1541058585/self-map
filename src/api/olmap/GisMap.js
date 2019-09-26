@@ -20,6 +20,7 @@ import { Circle as CircleStyle, Fill, Icon, Stroke, Style, Text } from 'ol/style
 import TestData from './TestData.js';
 import AppUrlConfig from '@/api/config/app-url-config.js';
 import DiffusionOverlay from './DiffusionOverlay';
+import eventBus from '@/api/eventBus'
 export default class GisMap extends OlMap {
   constructor(opt0ptions) {
     const options = opt0ptions !== {} ? opt0ptions : {};
@@ -383,74 +384,15 @@ export default class GisMap extends OlMap {
   }
   createAtmosphereModel() { // 创建大气扩散模型
     let polygonArray = [];
-    // AppUrlConfig.getAtmosphere().then(res => {
-    //   let num = 0;
-    //   res.forEach((item) => {
-    //     console.log(item.ImpactRegions[0]);
-    //     num++;
-    //     let polygon = [];
-    //     item.ImpactRegions[0].forEach((item2) => {
-    //       let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
-    //       polygon.push(`${transPoint[0]}|${transPoint[1]}`);
-    //       // let transJson = { longitude: transPoint[0], latitude: transPoint[1] }
-    //       // let marker = this._addIconMarkersByName(transJson, '', `/static/images/png/${num}.png`, this);
-    //       // this.markers.push(marker);
-    //     });
-    //     polygon.push(polygon[0])
-    //     // console.log(polygon.toString());
-    //     let data = { id: '1', name: `${num}` };
-    //     if (num === 1) {
-    //       this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
-    //     }
-    //     if (num === 2) {
-    //       this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
-    //     }
-    //     if (num === 3) {
-    //       this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
-    //     }
-    //   });
-    // });
-
-    // AppUrlConfig.getAtmosphere().then(res => {
-    //   console.log(res);
-    //   let num = 0;
-    //   res[0].ImpactRegions.forEach((item) => {
-    //         num++;
-    //         let polygon = [];
-    //         item.forEach((item2) => {
-    //           let transPoint = transform([item2.X, item2.Y], 'EPSG:900913', 'EPSG:4326');
-    //           polygon.push(`${transPoint[0]}|${transPoint[1]}`);
-    //         });
-    //         polygon.push(polygon[0])
-    //         console.log(polygon.toString());
-    //         let data = { id: '1', name: `${num}` };
-    //         if (num === 1) {
-    //           this.showSinglePolygon(data, polygon.toString(), 1, '#1fca04', 0.8);
-    //         }
-    //         if (num === 2) {
-    //           this.showSinglePolygon(data, polygon.toString(), 2, '#fff72b', 0.8);
-    //         }
-    //         if (num === 3) {
-    //           this.showSinglePolygon(data, polygon.toString(), 3, '#ff0834', 0.8);
-    //         }
-    //   })
-    // });
-    // let single2 = {id: `OtherPollutionInfo@85`, name: `之维安`, longitude: `104.02584493160248`, latitude: `30.642347037792206`, value: Math.floor(Math.random() * 120)};
-    // let marker2 = this._addIconMarkersByName(single2, '', `/static/images/png/2.png`, this);
-    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:3857'));
-    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:102100'));
-    // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'EPSG:102113'));
-    console.log(transform([1493.0103431931493, -2147.5301151678418], 'EPSG:900913', 'EPSG:4326'));
+    // console.log(transform([11564616.6592639, 3603799.4124632366], 'EPSG:3857', 'EPSG:4326'));
     // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'CRS:84'));
     AppUrlConfig.getAtmosphere().then(res => {
-      let param = {
-        circleCenter: [104.02584493160248, 30.642347037792206],
-        map: this.map,
-        color: ['#ff0834', '#ff8c35', '#1fca04'],
-        data: res[0]
-      }
-      let diffusionOverlay = new DiffusionOverlay(param);
-      diffusionOverlay.createDiffusion();
+        let diffusionModelData = {
+          circleCenter: [103.886719, 30.776825000000017],
+          releaseDuration: '22',
+          modelData: res
+        };
+        eventBus.$emit('diffusion-model-data', diffusionModelData);
     });
   }
   _createPolygonStyleSetColor(feature, color) {

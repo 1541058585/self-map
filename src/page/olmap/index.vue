@@ -2,7 +2,6 @@
   <div class="ol-map">
     <div class="left">
         <ul class="menu">
-          <li @click="createAtmosphereModel()">大气扩散模型</li>
           <li @click="switchMap('OSM')">openlayers地图OSM形式</li>
           <li @click="switchMap('XYZ')">openlayers地图XYZ形式</li>
           <li @click="switchMap('')">国家地理信息公共服务平台 天地图</li>
@@ -16,6 +15,7 @@
           <li @click="addChinaAdmini()">叠加行政区划图层</li>
           <li @click="addGardenPlan()">规划园区</li>
           <li @click="addHeatmapOverlay()">热力图</li>
+          <li @click="createAtmosphereModel()">大气扩散模型</li>
           <li @click="addHeatmapOverlay()">热力图</li>
           <li @click="addHeatmapOverlay()">热力图</li>
           <li @click="addHeatmapOverlay()">热力图</li>
@@ -24,6 +24,7 @@
     </div>
     <div id="one-olmap" class="one-olmap">
       <text-box v-if="false" :olmap="olmap"></text-box>
+      <DiffusionPlayModel  :map="olmap.map" v-if="diffusionModel.playStopFlag" :diffusionModel="diffusionModel"></DiffusionPlayModel>
     </div>
     <div id="popup" class="ol-popup">
       <div id="popup-content" class="popup-content">
@@ -41,15 +42,26 @@
 <script>
     import GisMap from '@/api/olmap/GisMap.js';
     import AppUrlConfig from '@/api/config/app-url-config.js';
+    import eventBus from '@/api/eventBus';
+    import Utils from '@/utils/utils'
     export default {
        data() {
          return {
            olmapflag: false,
-           olmap: null
+           olmap: null,
+           diffusionModel: { // 大气扩散模型
+             playStopFlag: false, // 是否显示
+             circleCenter: [], // 发生地点,经纬度
+             releaseDuration: 0, // 分钟
+             modelData: [], // 模型相关的数据
+             number: 0,
+             uuid: 0
+           }
          }
        },
         components: {
-          TextBox: () => import('./component/TextBox')
+          TextBox: () => import('./component/TextBox'),
+          DiffusionPlayModel: () => import('./component/DiffusionPlayModel')
         },
         mounted() {
           this.$nextTick(() => {
@@ -71,6 +83,13 @@
                 this.olmapflag = true;
               }
             });
+          });
+          eventBus.$on('diffusion-model-data', (diffusionModelData) => {
+            this.diffusionModel.circleCenter = diffusionModelData.circleCenter;
+            this.diffusionModel.modelData = diffusionModelData.modelData;
+            this.diffusionModel.releaseDuration = diffusionModelData.releaseDuration;
+            this.diffusionModel.playStopFlag = true;
+            this.diffusionModel.uuid = Utils.getGuid();
           })
         },
         methods: {

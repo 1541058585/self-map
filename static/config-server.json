@@ -3,7 +3,7 @@
   "name": "openlayers",
   "remark": "基于openlayers 写的地图",
   "AppConfig": {
-    "MAP_LAYER_Type_": "TianDiTu_sichuan",
+    "MAP_LAYER_Type_": "",
     "MAP_CENTER_": [104.83154296875, 30.6463623046875],
     "MAP_MinZoom_": 8,
     "MAP_Extent_": [101.8377685546875,29.14947509765625,107.8253173828125,32.14324951171875],

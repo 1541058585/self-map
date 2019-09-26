@@ -1,0 +1,43 @@
+.ol-map {
+  .marker-content {
+    font-size: 12px;
+    padding: 5px 0px 0px 10px;
+    &:hover {
+      cursor: pointer;
+    }
+    .title {
+      width: 100%;
+      color: white;
+      line-height: 26px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .time, .radius {
+      width: 100%;
+      color: white;
+      line-height: 18px;
+      font-size: 12px;
+    }
+  }
+  .marker-content:after, .marker-content:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: auto;
+    width: auto;
+    position: absolute;
+    pointer-events: none;
+  }
+  .marker-content:after {
+    border-top-color: white;
+    border-width: 5px;
+    left: 10px;
+    margin-left: -5px;
+  }
+  .marker-content:before {
+    border-top-color: #cccccc;
+    border-width: 6px;
+    left: 10px;
+    margin-left: -6px;
+  }
+}

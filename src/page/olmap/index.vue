@@ -218,4 +218,5 @@
 </style>
 <style lang="scss">
   @import "../../assets/css/popup-content.scss";
+  @import "../../assets/css/marker-content.scss";
 </style>

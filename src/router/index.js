@@ -30,6 +30,11 @@ export default new Router({
       path: '/canvas',
       name: 'canvas测试',
       component: () => import('@/page/canvas')
+    },
+    {
+      path: '/olmap3857',
+      name: 'olmap3857',
+      component: () => import('@/page/olmap3857')
     }
   ]
 })

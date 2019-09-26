@@ -32,6 +32,7 @@
              playStopFlag: false, // 是否显示
              circleCenter: [], // 发生地点,经纬度
              releaseDuration: 0, // 分钟
+             windDirection: 0, // 风向
              modelData: [], // 模型相关的数据
              number: 0,
              uuid: 0
@@ -68,6 +69,7 @@
             this.diffusionModel.circleCenter = diffusionModelData.circleCenter;
             this.diffusionModel.modelData = diffusionModelData.modelData;
             this.diffusionModel.releaseDuration = diffusionModelData.releaseDuration;
+            this.diffusionModel.windDirection = diffusionModelData.windDirection;
             this.diffusionModel.playStopFlag = true;
             this.diffusionModel.uuid = Utils.getGuid();
           })

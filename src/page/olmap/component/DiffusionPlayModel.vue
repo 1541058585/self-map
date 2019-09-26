@@ -49,6 +49,7 @@
             let param = {
               circleCenter: this.diffusionModel.circleCenter,
               releaseDuration: this.diffusionModel.releaseDuration,
+              windDirection: this.diffusionModel.windDirection,
               map: this.map,
               color: ['#ffa500', '#ff0834', '#1fca04'],
               data: this.diffusionModel.modelData[0]

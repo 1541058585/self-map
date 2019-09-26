@@ -387,17 +387,26 @@ export default class GisMap extends OlMap {
     // console.log(transform([11339448.61016602, 4381002.033645893], 'EPSG:3857', 'EPSG:4326'));
     // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'CRS:84'));
     // 101.86400000000002, 36.58200000000001
-    let rdm = Math.floor(Math.random() * 2); // [0, 1]
+    let rdm = Math.floor(Math.random() * 3); // [0, 1, 2]
     let circleCenter = [103.886719, 30.776825000000017];
+    let windDirection = 0;
+    console.log(rdm);
     if (rdm === 0) {
       circleCenter = [103.886719, 30.776825000000017];
+      windDirection = 260
     }
     if (rdm === 1) {
       circleCenter = [101.86400000000002, 36.58200000000001];
+      windDirection = 180
+    }
+    if (rdm === 2) {
+      circleCenter = [101.86400000000002, 36.58200000000001];
+      windDirection = 120
     }
     AppUrlConfig.getAtmosphere({ rdm: rdm }).then(res => {
         let diffusionModelData = {
           circleCenter: circleCenter,
+          windDirection: windDirection,
           releaseDuration: '22',
           modelData: res
         };

@@ -14,6 +14,7 @@ export default class DiffusionOverlay {
   constructor(opt0ptions) {
     this.circleCenter = opt0ptions.circleCenter;
     this.releaseDuration = opt0ptions.releaseDuration;
+    this.windDirection = opt0ptions.windDirection;
     this.EPSG3857 = 'EPSG:3857';
     this.EPSG4326 = 'EPSG:4326';
     this.map = opt0ptions.map;
@@ -54,9 +55,11 @@ export default class DiffusionOverlay {
             polygon.push(`${transPoint[0]}|${transPoint[1]}`);
           });
           polygon.push(polygon[0])
+
           let data = { id: `${num}`, name: `${num}` };
           if (num === 1) { // 橙色
             let reData = this._calculateRadius(this.data.SafeDistances[0]);
+            // let reData = this._calculateRadiusByItem(item);
             let polygonCircle = this.drawCircle(this.circleCenter, reData.distance, this.color[0]);
             let lastCoordinate = polygonCircle.getGeometry().getLastCoordinate();
             let extent = polygonCircle.getGeometry().getExtent();
@@ -77,6 +80,7 @@ export default class DiffusionOverlay {
           }
           if (num === 2) { // 红色
             let reData = this._calculateRadius(this.data.SafeDistances[1]);
+            // let reData = this._calculateRadiusByItem(item);
             let polygonCircle = this.drawCircle(this.circleCenter, reData.distance, this.color[1]);
             let html = this.getPopupHtml({
               title: '危险区域',
@@ -221,6 +225,33 @@ export default class DiffusionOverlay {
       })
     });
   }
+  _calculateRadiusByItem(item) {
+    let startPoint = transform([item[0].X, item[0].Y], this.EPSG3857, this.EPSG4326);
+    let endPoint = [];
+    if (Number(this.windDirection) > 180 & Number(this.windDirection) <= 360) {
+      // console.log(item.length / 2);
+      endPoint = transform([item[parseInt(item.length / 2) - 1].X, item[parseInt(item.length / 2) - 1].Y], this.EPSG3857, this.EPSG4326);
+    }
+    if (Number(this.windDirection) > 0 & Number(this.windDirection) <= 180) {
+      console.log(item.length / 2);
+      endPoint = transform([item[parseInt(item.length / 2)].X, item[parseInt(item.length / 2)].Y], this.EPSG3857, this.EPSG4326);
+    }
+    let feature = new Feature({
+      geometry: new Point([endPoint[0], endPoint[1]])
+    });
+    feature.setStyle(new Style({
+      image: new CircleStyle({
+        radius: 5,
+        fill: new Fill({ color: `#00F` })
+      })
+    }));
+    this.source.addFeature(feature);
+    let distance = 0.0;
+    let dx = Math.pow(startPoint[0] - endPoint[0], 2);
+    let dy = Math.pow(startPoint[1] - endPoint[1], 2);
+    distance = Math.sqrt(dx + dy);
+    return { distance: distance, transStartPoint: startPoint, endStartPoint: endPoint };
+  }
   _calculateRadius(safeDistances) {
     let startPoint = transform(this.circleCenter, this.EPSG4326, this.EPSG3857);
     let endX = startPoint[0] - safeDistances;
@@ -250,6 +281,7 @@ export default class DiffusionOverlay {
       });
       this.overlayPopupArray = [];
     }
+    this.source.clear();
   }
   getPopupHtml(data) {
     let colors = this.getColor(0);

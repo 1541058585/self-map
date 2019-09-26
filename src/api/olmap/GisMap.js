@@ -384,11 +384,20 @@ export default class GisMap extends OlMap {
   }
   createAtmosphereModel() { // 创建大气扩散模型
     let polygonArray = [];
-    // console.log(transform([11564616.6592639, 3603799.4124632366], 'EPSG:3857', 'EPSG:4326'));
+    // console.log(transform([11339448.61016602, 4381002.033645893], 'EPSG:3857', 'EPSG:4326'));
     // console.log(transform([104.02584493160248, 30.642347037792206], `EPSG:4326`, 'CRS:84'));
-    AppUrlConfig.getAtmosphere().then(res => {
+    // 101.86400000000002, 36.58200000000001
+    let rdm = Math.floor(Math.random() * 2); // [0, 1]
+    let circleCenter = [103.886719, 30.776825000000017];
+    if (rdm === 0) {
+      circleCenter = [103.886719, 30.776825000000017];
+    }
+    if (rdm === 1) {
+      circleCenter = [101.86400000000002, 36.58200000000001];
+    }
+    AppUrlConfig.getAtmosphere({ rdm: rdm }).then(res => {
         let diffusionModelData = {
-          circleCenter: [103.886719, 30.776825000000017],
+          circleCenter: circleCenter,
           releaseDuration: '22',
           modelData: res
         };

@@ -58,10 +58,11 @@ export default class DiffusionOverlay {
 
           let data = { id: `${num}`, name: `${num}` };
           if (num === 1) { // 橙色
-            let reData = this._calculateRadius(this.data.SafeDistances[0]);
-            // let reData = this._calculateRadiusByItem(item);
+            // let reData = this._calculateRadius(this.data.SafeDistances[0]);
+            let reData = this._calculateRadiusByItem(item);
+            let endX = this.circleCenter[0] + reData.distance;
+            let endPoint = [endX, this.circleCenter[1]];
             let polygonCircle = this.drawCircle(this.circleCenter, reData.distance, this.color[0]);
-            let lastCoordinate = polygonCircle.getGeometry().getLastCoordinate();
             let extent = polygonCircle.getGeometry().getExtent();
             this.map.getView().fit(extent, this.map.getSize());
             let html = this.getPopupHtml({
@@ -71,16 +72,18 @@ export default class DiffusionOverlay {
             });
             let overlay = this._createMarkerPopup({
               id: 1,
-              longitude: lastCoordinate[0],
-              latitude: lastCoordinate[1]
+              longitude: endPoint[0],
+              latitude: endPoint[1]
             }, html, [-10, -100], this.color[0]);
             this.overlayPopupArray.push(overlay);
             this.polygonData.push(polygon);
             this.showSinglePolygon(data, polygon.toString(), 2, this.color[0], 0.8);
           }
           if (num === 2) { // 红色
-            let reData = this._calculateRadius(this.data.SafeDistances[1]);
-            // let reData = this._calculateRadiusByItem(item);
+            // let reData = this._calculateRadius(this.data.SafeDistances[1]);
+            let reData = this._calculateRadiusByItem(item);
+            let endX = this.circleCenter[0] - reData.distance;
+            let endPoint = [endX, this.circleCenter[1]];
             let polygonCircle = this.drawCircle(this.circleCenter, reData.distance, this.color[1]);
             let html = this.getPopupHtml({
               title: '危险区域',
@@ -89,8 +92,8 @@ export default class DiffusionOverlay {
             });
             let overlay = this._createMarkerPopup({
               id: 1,
-              longitude: reData.endStartPoint[0],
-              latitude: reData.endStartPoint[1]
+              longitude: endPoint[0],
+              latitude: endPoint[1]
             }, html, [-10, -100], this.color[1]);
             this.overlayPopupArray.push(overlay);
             this.polygonData.push(polygon);
@@ -229,11 +232,8 @@ export default class DiffusionOverlay {
     let startPoint = transform([item[0].X, item[0].Y], this.EPSG3857, this.EPSG4326);
     let endPoint = [];
     if (Number(this.windDirection) > 180 & Number(this.windDirection) <= 360) {
-      // console.log(item.length / 2);
       endPoint = transform([item[parseInt(item.length / 2) - 1].X, item[parseInt(item.length / 2) - 1].Y], this.EPSG3857, this.EPSG4326);
-    }
-    if (Number(this.windDirection) > 0 & Number(this.windDirection) <= 180) {
-      console.log(item.length / 2);
+    } else if (Number(this.windDirection) > 0 & Number(this.windDirection) <= 180) {
       endPoint = transform([item[parseInt(item.length / 2)].X, item[parseInt(item.length / 2)].Y], this.EPSG3857, this.EPSG4326);
     }
     let feature = new Feature({
@@ -241,14 +241,14 @@ export default class DiffusionOverlay {
     });
     feature.setStyle(new Style({
       image: new CircleStyle({
-        radius: 5,
+        radius: 0,
         fill: new Fill({ color: `#00F` })
       })
     }));
     this.source.addFeature(feature);
     let distance = 0.0;
-    let dx = Math.pow(startPoint[0] - endPoint[0], 2);
-    let dy = Math.pow(startPoint[1] - endPoint[1], 2);
+    let dx = Math.pow(endPoint[0] - this.circleCenter[0], 2);
+    let dy = Math.pow(endPoint[1] - this.circleCenter[1], 2);
     distance = Math.sqrt(dx + dy);
     return { distance: distance, transStartPoint: startPoint, endStartPoint: endPoint };
   }

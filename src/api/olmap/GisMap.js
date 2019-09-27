@@ -186,10 +186,8 @@ export default class GisMap extends OlMap {
       }
     };
     this.map.on('singleclick', this.singleclickListener);
+    // let LonLat = this.computerThatLonLat(this.center[0], this.center[1], 50, 100);
   }
-  // _addIconMarkersVector(data, icon, _this) {
-  //   debugger
-  // }
   setSearchKey(val) {
     this.searchKey = val;
   }
@@ -481,5 +479,98 @@ export default class GisMap extends OlMap {
       this.wmsLayer = [];
     }
     this.map.un('singleclick', this.singleclickListener);
+  }
+  /**
+   * lon, 经度
+   * lat, 纬度
+   * brng, 度
+   * dist distance 距离
+   * 大地坐标系资料WGS-84 长半径a=6378137 短半径b=6356752.3142 扁率f=1/298.2572236
+   * */
+  computerThatLonLat(lon, lat, brng, dist) {
+    /** 长半径a=6378137 */
+    let a = 6378137;
+    /** 短半径b=6356752.3142 */
+    let b = 6356752.3142;
+    /** 扁率f=1/298.2572236 */
+    let f = 1 / 298.2572236;
+
+    let alpha1 = this.rad(brng);
+    let sinAlpha1 = Math.sin(alpha1);
+    let cosAlpha1 = Math.cos(alpha1);
+
+    let tanU1 = (1 - f) * Math.tan(this.rad(lat));
+    let cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
+    let sinU1 = tanU1 * cosU1;
+    let sigma1 = Math.atan2(tanU1, cosAlpha1);
+    let sinAlpha = cosU1 * sinAlpha1;
+    let cosSqAlpha = 1 - sinAlpha * sinAlpha;
+    let uSq = (cosSqAlpha * (a * a - b * b)) / (b * b);
+    let A = 1 + (uSq / 16384) * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+    let B = (uSq / 1024) * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+    let cos2SigmaM = 0;
+    let sinSigma = 0;
+    let cosSigma = 0;
+    let sigma = dist / (b * A);
+    let sigmaP = 2 * Math.PI;
+    while (Math.abs(sigma - sigmaP) > 1e-12) {
+      cos2SigmaM = Math.cos(2 * sigma1 + sigma);
+      sinSigma = Math.sin(sigma);
+      cosSigma = Math.cos(sigma);
+      let deltaSigma =
+        B *
+        sinSigma *
+        (cos2SigmaM +
+          (B / 4) *
+          (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
+            (B / 6) *
+            cos2SigmaM *
+            (-3 + 4 * sinSigma * sinSigma) *
+            (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+      sigmaP = sigma;
+      sigma = dist / (b * A) + deltaSigma;
+    }
+
+    let tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;
+    let lat2 = Math.atan2(
+      sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1,
+      (1 - f) * Math.sqrt(sinAlpha * sinAlpha + tmp * tmp)
+    );
+    let lambda = Math.atan2(
+      sinSigma * sinAlpha1,
+      cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1
+    );
+    let C = (f / 16) * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
+    let L =
+      lambda -
+      (1 - C) *
+      f *
+      sinAlpha *
+      (sigma +
+        C *
+        sinSigma *
+        (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+
+    let revAz = Math.atan2(sinAlpha, -tmp); // final bearing
+    let lnglat = [lon + this.deg(L), this.deg(lat2)];
+    return lnglat;
+  }
+  /**
+   * 度换成弧度
+   *@param d
+   *            度
+   *     @return 弧度
+   **/
+  rad(d) {
+    return (d * Math.PI) / 180.0;
+  }
+  /**
+   * 弧度换成度
+   * @param x
+   *            弧度
+   * @return 度
+   **/
+  deg(x) {
+    return (x * 180) / Math.PI;
   }
 }

@@ -402,6 +402,7 @@ export default class GisMap extends OlMap {
       windDirection = 120
     }
     AppUrlConfig.getAtmosphere({ rdm: rdm }).then(res => {
+      // res.splice(0, 1);
         let diffusionModelData = {
           circleCenter: circleCenter,
           windDirection: windDirection,

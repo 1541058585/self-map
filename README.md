@@ -31,7 +31,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 remark：地图上遇到的问题:在地图里面踩过的坑。
         1.一起来看看天地图的api,看看天地图是如何使用国外开源代码，封装成自己的地图。从天地图的api中去感受编码思想。（百度api和天地图api,简直就是兄弟，长得太像了，都属于国产）
-        2.看看2018的天地图（https://map.tianditu.gov.cn/），我当时抓取的网站源码（这是天地图用vue刚刚改版完,最新的，当时网站还没有设置安全策略，恰巧抓取的）
+        2.看看2018的天地图（https://map.tianditu.gov.cn/），我当时抓取的网站源码（这是天地图用vue刚刚改版完,最新的）
         3.那以后，来看看我之前是如何仿照天地图来封装vue组件的。
         4.地图变革，为什么我们要从天地图api变革到openlayers的api,技术选型，都经历了哪些痛！
           openlayer：优点：开源，开源，开源，还有就是说按需引用，不需要的可以不引用。可以研究源代码以及针对性对源代码进行一些修改工作；
